@@ -22751,39 +22751,33 @@ class MainView extends _reactDefault.default.Component {
             movies: [
                 {
                     _id: 1,
-                    Title: 'Kung Fu Panda',
-                    Description: 'When the Valley of Peace is threatened, the lazy panda Po discovers his destiny as the "chosen one" and trains to become a Kung Fu hero, but transforming the unsleek slacker into a brave warrior won\'t be easy. It\'s up to Master Shifu and the Furious Five - Tigress, Crane, Mantis, Viper and Monkey - to give it a try.',
-                    ImagePath: 'https://www.themoviedb.org/t/p/w1280/wWt4JYXTg5Wr3xBW2phBrMKgp3x.jpg'
+                    Title: 'Inception',
+                    Description: 'desc1...',
+                    ImagePath: '...'
                 },
                 {
                     _id: 2,
-                    Title: 'Guardians of the Galaxy',
-                    Description: 'After stealing a mysterious orb in the far reaches of outer space, Peter Quill from Earth is now the main target of a manhunt led by the villain known as Ronan the Accuser. To help fight Ronan and his team and save the galaxy from his power, Quill creates a team of space heroes known as the "Guardians of the Galaxy" to save the galaxy.',
-                    ImagePath: 'https://www.themoviedb.org/t/p/w1280/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg'
+                    Title: 'The Shawshank Redemption',
+                    Description: 'desc2...',
+                    ImagePath: '...'
                 },
                 {
                     _id: 3,
-                    Title: 'Inception',
-                    Description: 'Dom Cobb is a skilled thief, the absolute best in the dangerous art of extraction, stealing valuable secrets from deep within the subconscious during the dream state, when the mind is at its most vulnerable. Cobb\'s rare ability has made him a coveted player in this treacherous new world of corporate espionage, but it has also made him an international fugitive and cost him everything he has ever loved. Now Cobb is being offered a chance at redemption. One last job could give him his life back but only if he can accomplish the impossible: "inception", the implantation of another person\'s idea into a target\'s subconscious.',
-                    ImagePath: 'https://www.themoviedb.org/t/p/w1280/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg'
+                    Title: 'Gladiator',
+                    Description: 'desc3...',
+                    ImagePath: '...'
                 }
             ],
-            // by default no movie selected, so it shows movie list
             selectedMovie: null
         };
     }
-    setSelectedMovie(newSelectedMovie) {
-        this.setState({
-            selectedMovie: newSelectedMovie
-        });
-    }
     render() {
-        const { movies , selectedMovie  } = this.state;
+        const { movies  } = this.state;
         if (movies.length === 0) return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
             className: "main-view",
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 29
+                lineNumber: 22
             },
             __self: this,
             children: "The list is empty!"
@@ -22792,27 +22786,14 @@ class MainView extends _reactDefault.default.Component {
             className: "main-view",
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 32
+                lineNumber: 25
             },
             __self: this,
-            children: selectedMovie ? /*#__PURE__*/ _jsxRuntime.jsx(_movieView.MovieView, {
-                movie: selectedMovie,
-                onBackClick: (newSelectedMovie)=>{
-                    this.setSelectedMovie(newSelectedMovie);
-                },
-                __source: {
-                    fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 34
-                },
-                __self: this
-            }) : movies.map((movie)=>/*#__PURE__*/ _jsxRuntime.jsx(_movieCard.MovieCard, {
-                    movie: movie,
-                    onMovieClick: (movie1)=>{
-                        this.setSelectedMovie(movie1);
-                    },
+            children: movies.map((movie)=>/*#__PURE__*/ _jsxRuntime.jsx(_movieCard.MovieCard, {
+                    movieData: movie,
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 36
+                        lineNumber: 26
                     },
                     __self: this
                 }, movie._id)
@@ -22843,18 +22824,15 @@ var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 class MovieCard extends _reactDefault.default.Component {
     render() {
-        const { movie , onMovieClick  } = this.props;
+        const { movieData  } = this.props;
         return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
             className: "movie-card",
-            onClick: ()=>{
-                onMovieClick(movie);
-            },
             __source: {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 7
+                lineNumber: 6
             },
             __self: this,
-            children: movie.Title
+            children: movieData.Title
         }));
     }
 }
@@ -23032,7 +23010,7 @@ var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 class MovieView extends _reactDefault.default.Component {
     render() {
-        const { movie , onBackClick  } = this.props;
+        const { movie  } = this.props;
         return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
             className: "movie-view",
             __source: {
@@ -23112,17 +23090,6 @@ class MovieView extends _reactDefault.default.Component {
                             children: movie.Description
                         })
                     ]
-                }),
-                /*#__PURE__*/ _jsxRuntime.jsx("button", {
-                    onClick: ()=>{
-                        onBackClick(null);
-                    },
-                    __source: {
-                        fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 20
-                    },
-                    __self: this,
-                    children: "Back"
                 })
             ]
         }));
@@ -23136,4 +23103,4 @@ class MovieView extends _reactDefault.default.Component {
 }
 },{"react/jsx-runtime":"8xIwr","react":"6TuXu","@parcel/transformer-js/src/esmodule-helpers.js":"5XLGi","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"iFU7k"}],"jUTZ8":[function() {},{}]},["5XvW5","lTnHz","dLPEP"], "dLPEP", "parcelRequireaec4")
 
-//# sourceMappingURL=index.6701a6e1.js.map
+//# sourceMappingURL=index.js.map
