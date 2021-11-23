@@ -1,36 +1,82 @@
 import React from 'react';
+import axios from 'axios';
+
+import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+import { RegistrationView } from '../registration-view/registration-view';
 
 class MainView extends React.Component {
   // constructor method creates the component
   constructor() {
     super();
+    // initial state is set to null
     this.state = {
-      movies: [
-        { _id: 1, Title: 'Kung Fu Panda', Description: 'When the Valley of Peace is threatened, the lazy panda Po discovers his destiny as the "chosen one" and trains to become a Kung Fu hero, but transforming the unsleek slacker into a brave warrior won\'t be easy. It\'s up to Master Shifu and the Furious Five - Tigress, Crane, Mantis, Viper and Monkey - to give it a try.', ImagePath: 'https://www.themoviedb.org/t/p/w1280/wWt4JYXTg5Wr3xBW2phBrMKgp3x.jpg' },
-        { _id: 2, Title: 'Guardians of the Galaxy', Description: 'After stealing a mysterious orb in the far reaches of outer space, Peter Quill from Earth is now the main target of a manhunt led by the villain known as Ronan the Accuser. To help fight Ronan and his team and save the galaxy from his power, Quill creates a team of space heroes known as the "Guardians of the Galaxy" to save the galaxy.', ImagePath: 'https://www.themoviedb.org/t/p/w1280/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg' },
-        { _id: 3, Title: 'Inception', Description: 'Dom Cobb is a skilled thief, the absolute best in the dangerous art of extraction, stealing valuable secrets from deep within the subconscious during the dream state, when the mind is at its most vulnerable. Cobb\'s rare ability has made him a coveted player in this treacherous new world of corporate espionage, but it has also made him an international fugitive and cost him everything he has ever loved. Now Cobb is being offered a chance at redemption. One last job could give him his life back but only if he can accomplish the impossible: "inception", the implantation of another person\'s idea into a target\'s subconscious.', ImagePath: 'https://www.themoviedb.org/t/p/w1280/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg' }
-      ],
+      movies: [],
       // by default no movie selected, so it shows movie list
-      selectedMovie: null
+      selectedMovie: null,
+      user: null
     };
   }
 
-  setSelectedMovie(newSelectedMovie) {
+  componentDidMount() {
+    // fetch movies from myFlix API
+    axios.get('https://nightorbs-myflix.herokuapp.com/movies')
+      .then(response => {
+        this.setState({
+          movies: response.data
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  // when movie is clicked, this function updates state of selectedMovie property to that movie
+  setSelectedMovie(movie) {
     this.setState({
-      selectedMovie: newSelectedMovie
+      selectedMovie: movie
+    });
+  }
+
+  // when user successfully registers
+  onRegistration(register) {
+    this.setState({
+      register
+    });
+  }
+
+  // when user successfully logs in, this function updates user property in state to that particular user
+  onLoggedIn(user) {
+    this.setState({
+      user
     });
   }
 
   render() {
-    const { movies, selectedMovie } = this.state;
+    const { movies, selectedMovie, user, register } = this.state;
 
-    if (movies.length === 0) return <div className="main-view">The list is empty!</div>;
+    // registration view
+    // if (!register) return <RegistrationView onRegistration={register => this.onRegistration(register)} />;
+
+    // login view with button to registration (button doesn't work yet)
+    // if (!user) return (
+    //   <div>
+    //     <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+    //     <button type="button">Register</button>
+    //   </div>
+    // );
+
+    // if there is no user, LoginView is rendered. if a user is logged in, user details are passed as a prop to LoginView
+    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+
+    // before movies have been loaded
+    if (movies.length === 0) return <div className="main-view" />;
 
     return (
       <div className="main-view">
         {selectedMovie
+        // if state of selectedMovie is not, that selected movie will be returned otherwise all movies will be returned
           ? <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }} />
           : movies.map(movie => (
             <MovieCard key={movie._id} movie={movie} onMovieClick={(movie) => { this.setSelectedMovie(movie); }} />
