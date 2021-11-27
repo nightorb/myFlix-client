@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button, Image } from 'react-bootstrap';
 
 export class MovieView extends React.Component {
   render() {
@@ -7,7 +8,7 @@ export class MovieView extends React.Component {
     return (
       <div className="movie-view">
         <div className="movie-poster">
-          <img src={movie.ImagePath} crossOrigin="anonymous" />
+          <Image src={movie.ImagePath} crossOrigin="anonymous" fluid />
         </div>
         <div className="movie-title">
           <span className="label">Title: </span>
@@ -17,7 +18,7 @@ export class MovieView extends React.Component {
           <span className="label">Description: </span>
           <span className="value">{movie.Description}</span>
         </div>
-        <button onClick={() => { onBackClick(null); }}>Back</button>
+        <Button variant="primary" onClick={() => { onBackClick(null); }}>Back</Button>
       </div>
     );
   }
