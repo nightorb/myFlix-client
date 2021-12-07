@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { Form, Button, Card } from 'react-bootstrap';
 
 export function LoginView(props) {
@@ -11,9 +12,18 @@ export function LoginView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password);
-    // send request to server for authentication, then call
-    props.onLoggedIn(username);
+    // send request to server for authentication
+    axios.post('https://nightorbs-myflix.herokuapp.com/login', {
+      Username: username,
+      Password: password
+    })
+    .then(response => {
+      const data = response.data;
+      props.onLoggedIn(data);
+    })
+    .catch(e => {
+      console.log('no such user');
+    });
   };
 
   return (
