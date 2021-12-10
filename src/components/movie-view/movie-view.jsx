@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Col, Button, Image } from 'react-bootstrap';
 
@@ -13,11 +14,9 @@ export class MovieView extends React.Component {
             <Image src={movie.ImagePath} crossOrigin="anonymous" fluid />
           </div>
           <div className="movie-title">
-            <span className="label">Title: </span>
             <span className="value">{movie.Title}</span>
           </div>
           <div className="movie-description">
-            <span className="label">Description: </span>
             <span className="value">{movie.Description}</span>
           </div>
           <div className="movie-genre">
@@ -44,3 +43,29 @@ export class MovieView extends React.Component {
     );
   }
 }
+
+MovieView.propTypes = {
+  movie: PropTypes.shape({
+    Title: PropTypes.string.isRequired,
+    Description: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired,
+    ReleaseYear: PropTypes.string.isRequired,
+    Genre: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+      Description: PropTypes.string.isRequired
+    }),
+    Director: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+      Bio: PropTypes.string.isRequired,
+      BirthYear: PropTypes.string.isRequired,
+      Movies: PropTypes.array.isRequired
+    }),
+    Actors: PropTypes.arrayOf(
+      PropTypes.shape({
+        Name: PropTypes.string.isRequired,
+        BirthYear: PropTypes.string.isRequired,
+        Movies: PropTypes.array.isRequired
+      })),
+    Featured: PropTypes.bool.isRequired
+  }).isRequired
+};
