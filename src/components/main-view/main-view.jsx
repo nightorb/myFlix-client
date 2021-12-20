@@ -116,6 +116,16 @@ class MainView extends React.Component {
               )
             }} />
 
+            <Route path="/genres/:name" render={({ match, history }) => {
+              if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+
+              if (movies.length === 0) return <div className="main-view" />;
+
+              return (
+                <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} onBackClick={() => history.goBack()} />
+              )
+            }} />
+
             <Route path="/directors/:name" render={({ match, history }) => {
               if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
 
@@ -123,6 +133,16 @@ class MainView extends React.Component {
 
               return (
                 <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} onBackClick={() => history.goBack()} />
+              )
+            }} />
+
+            <Route path="/actors/:name" render={({ match, history }) => {
+              if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+
+              if (movies.length === 0) return <div className="main-view" />;
+
+              return (
+                <ActorView actor={movies.find(m => m.Actors.Name === match.params.name).Actors} onBackClick={() => history.goBack()} />
               )
             }} />
 
