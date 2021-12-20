@@ -38,22 +38,44 @@ export function RegistrationView(props) {
           <Form>
             <Form.Group className="mb-3" controlId="formUsername">
               <Form.Label>Username:</Form.Label>
-              <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} required placeholder="Enter a username" />
+              <Form.Control
+                type="text"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+                placeholder="Enter a username"
+                required
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formPassword">
               <Form.Label>Password:</Form.Label>
-              <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="Your password must be 8 or more characters" />
+              <Form.Control
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="Your password must be 8 or more characters"
+                required
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formEmail">
               <Form.Label>Email:</Form.Label>
-              <Form.Control type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="Enter your email adress" />
+              <Form.Control
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                placeholder="Enter your email adress"
+                required
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBirthday">
               <Form.Label>Birthday:</Form.Label>
-              <Form.Control type="date" value={birthday} onChange={e => setBirthday(e.target.value)} />
+              <Form.Control
+                type="date"
+                value={birthday}
+                onChange={e => setBirthday(e.target.value)}
+              />
             </Form.Group>
 
             <Button variant="primary" type="submit" onClick={handleRegister}>Sign up</Button>
@@ -78,5 +100,5 @@ RegistrationView.propTypes = {
     Email: PropTypes.string.isRequired,
     Birthday: PropTypes.string
   }),
-  onRegistration: PropTypes.func.isRequired
+  handleRegister: PropTypes.func.isRequired
 };
