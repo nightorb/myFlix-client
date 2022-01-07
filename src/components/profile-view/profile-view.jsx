@@ -18,14 +18,16 @@ export class ProfileView extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   this.props.getUser();
-  // }
-
   componentDidMount() {
-    this.setState({
-      user: localStorage.getItem('user')
-    });
+    this.props.getUser()
+    .then(response => {
+      this.setState({
+        user: response.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   updateUser(e) {
@@ -100,7 +102,7 @@ export class ProfileView extends React.Component {
     }
   }
 
-  removeFavorite = (movie) => {
+  removeFavorite(movie) {
     const token = localStorage.getItem('token');
 
     axios.delete(`https://nightorbs-myflix.herokuapp.com/users/${user.Username}/favorites/${movie._id}`, {
@@ -116,8 +118,11 @@ export class ProfileView extends React.Component {
   }
 
   render() {
-    const { user, username, password, email, birthday, movie, favoriteMovies, updateUser, removeFavorite, onBackClick } = this.props;
+    const { user } = this.state;
 
+    if (user === null) {
+      return 'Loading';
+    }
     return (
       <div>
       <Row>
