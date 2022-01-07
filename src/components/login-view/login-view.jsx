@@ -27,7 +27,7 @@ export function LoginView(props) {
   };
 
   return (
-    <Col xs={9} md={6}>
+    <Col xs={9} md={6} xl={4}>
       <Card>
         <Card.Header className="text-center" as="h4">
           Log in to your account
