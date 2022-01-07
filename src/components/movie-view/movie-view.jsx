@@ -24,7 +24,7 @@ export class MovieView extends React.Component {
     .catch(err => {
       console.log(err);
     });
-  };
+  }
 
   render() {
     const { movie, onBackClick } = this.props;
