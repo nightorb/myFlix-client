@@ -28,7 +28,7 @@ export function RegistrationView(props) {
   }
 
   return (
-    <Col xs={9} md={6}>
+    <Col xs={9} md={6} xl={4}>
       <Card>
         <Card.Header className="text-center" as="h4">
           Create a free account
