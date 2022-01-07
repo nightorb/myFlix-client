@@ -3,6 +3,7 @@ import axios from 'axios';
 import { BrowserRouter as Router, Route, Redirect, Link } from 'react-router-dom';
 import { Row, Col, Navbar, Nav, Button } from 'react-bootstrap';
 
+import { Navbar } from '../navbar/navbar.jsx';
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card';
@@ -36,7 +37,7 @@ class MainView extends React.Component {
   }
 
   getMovies(token) {
-    // fech movies from myFlix API
+    // fetch movies from myFlix API
     axios.get('https://nightorbs-myflix.herokuapp.com/movies', {
       // make authenticated requests to API by passing bearer authorization in header of HTTP request
       headers: { Authorization: `Bearer ${token}` }
@@ -78,15 +79,8 @@ class MainView extends React.Component {
     return (
       <div className="main-view">
         <Router>
-          <Navbar className="mb-5" bg="primary" variant="dark">
-            <Navbar.Brand href="#">myFlix</Navbar.Brand>
-            <Nav className="me-auto">
-              <Nav.Link href="#movies">Movies</Nav.Link>
-              <Nav.Link href="#profile">Profile</Nav.Link>
-              <Link to={`/users/${user}`}>Profile</Link>
-              <Button onClick={() => { this.onLoggedOut() }}>Logout</Button>
-            </Nav>
-          </Navbar>
+          <Navbar />
+
           <Row className="justify-content-center">
             <Route exact path="/" render={() => {
               if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
@@ -94,7 +88,7 @@ class MainView extends React.Component {
               if (movies.length === 0) return <div className="main-view" />;
 
               return movies.map(m => (
-                <Col md={4} lg={3} key={m._id}>
+                <Col xs={10} md={4} xl={3} key={m._id}>
                   <MovieCard movie={m} />
                 </Col>
               ))
@@ -111,9 +105,9 @@ class MainView extends React.Component {
 
               if (movies.length === 0) return <div className="main-view" />;
 
-              return (
+              return <Col xs={10} md={8} xl={6}>
                 <MovieView movie={movies.find(m => m._id === match.params.movieId)} onBackClick={() => history.goBack()} />
-              )
+              </Col>
             }} />
 
             <Route path="/genres/:name" render={({ match, history }) => {
