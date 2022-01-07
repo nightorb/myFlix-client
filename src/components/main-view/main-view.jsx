@@ -1,9 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import { BrowserRouter as Router, Route, Redirect, Link } from 'react-router-dom';
-import { Row, Col, Navbar, Nav, Button } from 'react-bootstrap';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { Row, Col } from 'react-bootstrap';
 
-import { Navbar } from '../navbar/navbar.jsx';
+import { NavbarView } from '../navbar-view/navbar-view.jsx';
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card';
@@ -65,6 +65,13 @@ class MainView extends React.Component {
     this.getMovies(authData.token);
   }
 
+  // create function to get user and get all data of user
+  getUser(username, token) {
+    axios.get(`https://nightorbs-myflix.herokuapp.com/users/${username}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+  }
+
   onLoggedOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -79,7 +86,7 @@ class MainView extends React.Component {
     return (
       <div className="main-view">
         <Router>
-          <Navbar />
+          <NavbarView />
 
           <Row className="justify-content-center">
             <Route exact path="/" render={() => {
@@ -146,7 +153,7 @@ class MainView extends React.Component {
               if (movies.length === 0) return <div className="main-view" />;
 
               return (
-                <ProfileView user={user} onBackClick={() => history.goBack()} />
+                <ProfileView getUser={() => this.getUser(user) } onBackClick={() => history.goBack()} />
               )
             }} />
           </Row>
