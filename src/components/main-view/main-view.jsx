@@ -20,6 +20,7 @@ class MainView extends React.Component {
     // initial state is set to null
     this.state = {
       movies: [],
+      directors: [],
       user: null
     };
   }
@@ -33,6 +34,8 @@ class MainView extends React.Component {
         user: localStorage.getItem('user')
       });
       this.getMovies(accessToken);
+      this.getDirectors(accessToken);
+      this.getUser(accessToken);
     }
   }
 
@@ -48,9 +51,37 @@ class MainView extends React.Component {
         movies: response.data
       });
     })
-    .catch(error => {
-      console.log(error);
+    .catch(err => {
+      console.log(err);
     });
+  }
+
+  getDirectors(token) {
+    axios.get('https://nightorbs-myflix.herokuapp.com/directors', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(response => {
+      this.setState({
+        directors: response.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+
+  getUser(user, token) {
+    axios.get(`https://nightorbs-myflix.herokuapp.com/users/${user.Username}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(response => {
+      this.setState({
+        user: response.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   // when user successfully logs in, this function updates user property in state to that particular user
@@ -63,13 +94,8 @@ class MainView extends React.Component {
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
-  }
-
-  // create function to get user and get all data of user
-  getUser(username, token) {
-    axios.get(`https://nightorbs-myflix.herokuapp.com/users/${username}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+    this.getDirectors(authData.token);
+    this.getUser(authData.token);
   }
 
   onLoggedOut() {
@@ -81,7 +107,7 @@ class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user } = this.state;
+    const { movies, directors, user } = this.state;
 
     return (
       <div className="main-view">
@@ -130,10 +156,10 @@ class MainView extends React.Component {
             <Route path="/directors/:name" render={({ match, history }) => {
               if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
 
-              if (movies.length === 0) return <div className="main-view" />;
+              if (directors.length === 0) return <div className="main-view" />;
 
               return (
-                <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} onBackClick={() => history.goBack()} />
+                <DirectorView director={directors.find(d => d.Director.Name === match.params.name).Director} onBackClick={() => history.goBack()} />
               )
             }} />
 
