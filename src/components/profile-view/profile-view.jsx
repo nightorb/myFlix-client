@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+// import { Link } from 'react-router-dom';
 import { Row, Col, Form, Button, Card } from 'react-bootstrap';
 
 import { MovieCard } from '../movie-card/movie-card';
@@ -19,20 +20,13 @@ export class ProfileView extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getUser()
-    .then(response => {
-      this.setState({
-        user: response.data
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    })
+    this.props.getUser();
   }
 
   updateUser(e) {
     e.preventDefault();
     const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
 
     axios.put(`https://nightorbs-myflix.herokuapp.com/users/${user.Username}`,
       {
@@ -65,19 +59,19 @@ export class ProfileView extends React.Component {
   }
 
   setUsername(value) {
-    this.state.Username = value;
+    this.setState(value)
   }
 
   setPassword(value) {
-    this.state.Password = value;
+    this.setState(value)
   }
 
   setEmail(value) {
-    this.state.Email = value;
+    this.setState(value)
   }
 
   setBirthday(value) {
-    this.state.Birthday = value;
+    this.setState(value)
   }
 
   deleteUser() {
@@ -85,16 +79,16 @@ export class ProfileView extends React.Component {
 
     if (confirmation) {
       const token = localStorage.getItem('token');
+      const user = localStorage.getItem('user');
 
       axios.delete(`https://nightorbs-myflix.herokuapp.com/users/${user.Username}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
-      .then(response => {
+      .then(() => {
         alert('Your account has been deleted.');
         localStorage.removeItem('user');
         localStorage.removeItem('token');
         // window.location.pathname = '/';
-        onLoggedOut();
       })
       .catch(err => {
         console.log(err);
@@ -104,11 +98,12 @@ export class ProfileView extends React.Component {
 
   removeFavorite(movie) {
     const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
 
     axios.delete(`https://nightorbs-myflix.herokuapp.com/users/${user.Username}/favorites/${movie._id}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
-    .then(response => {
+    .then(() => {
       alert('Movie was removed');
       this.componentDidMount();
     })
@@ -119,6 +114,7 @@ export class ProfileView extends React.Component {
 
   render() {
     const { user } = this.state;
+    const { updateUser, setUsername, setPassword, setEmail, setBirthday, onBackClick } = this.props;
 
     if (user === null) {
       return 'Loading';
@@ -153,7 +149,7 @@ export class ProfileView extends React.Component {
                   <Form.Label>Username:</Form.Label>
                   <Form.Control
                     type="text"
-                    value={username}
+                    value={user.Username}
                     onChange={e => setUsername(e.target.value)}
                     placeholder="Enter a new username"
                   />
@@ -163,7 +159,7 @@ export class ProfileView extends React.Component {
                   <Form.Label>Password:</Form.Label>
                   <Form.Control
                     type="password"
-                    value={password}
+                    value={user.Password}
                     onChange={e => setPassword(e.target.value)}
                     placeholder="Your password must be 8 or more characters"
                   />
@@ -173,7 +169,7 @@ export class ProfileView extends React.Component {
                   <Form.Label>Email:</Form.Label>
                   <Form.Control
                     type="email"
-                    value={email}
+                    value={user.Email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder="Enter a new email adress"
                   />
@@ -183,7 +179,7 @@ export class ProfileView extends React.Component {
                   <Form.Label>Birthday:</Form.Label>
                   <Form.Control
                     type="date"
-                    value={birthday}
+                    value={user.Birthday}
                     onChange={e => setBirthday(e.target.value)}
                   />
                 </Form.Group>
@@ -199,7 +195,7 @@ export class ProfileView extends React.Component {
       <Row>
         <h3>Favorite Movies</h3>
 
-        { favoriteMovies && favoriteMovies.map((movie) => {
+        { user.favoriteMovies && user.favoriteMovies.map((movie) => {
           <Col key={movie._id}>
             <MovieCard movie={movie} />
           </Col>
@@ -235,3 +231,28 @@ export class ProfileView extends React.Component {
     );
   }
 }
+
+ProfileView.propTypes = {
+  user: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    Password: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    Birthday: PropTypes.string.isRequired,
+    FavoriteMovies: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        Title: PropTypes.string.isRequired,
+        ImagePath: PropTypes.string.isRequired,
+        ReleaseYear: PropTypes.string.isRequired
+      })
+    )
+  }).isRequired,
+  getUser: PropTypes.func.isRequired,
+  onLoggedOut: PropTypes.func.isRequired,
+  onBackClick: PropTypes.func.isRequired,
+  setUsername: PropTypes.func.isRequired,
+  setPassword: PropTypes.func.isRequired,
+  setEmail: PropTypes.func.isRequired,
+  setBirthday: PropTypes.func.isRequired,
+  updateUser: PropTypes.func.isRequired,
+};
