@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col, Button, Image } from 'react-bootstrap';
+import { Col, Button } from 'react-bootstrap';
 
 export class GenreView extends React.Component {
+
   render() {
     const { genre, onBackClick } = this.props;
 
@@ -27,5 +28,6 @@ GenreView.propTypes = {
   genre: PropTypes.shape({
     Name: PropTypes.string.isRequired,
     Description: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  onBackClick: PropTypes.func.isRequired
 };
