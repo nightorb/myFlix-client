@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Col, Button, Image } from 'react-bootstrap';
+import { Col, Button } from 'react-bootstrap';
 
 export class DirectorView extends React.Component {
+
   constructor(props) {
     super(props);
   }
@@ -48,9 +49,12 @@ DirectorView.propTypes = {
     BirthYear: PropTypes.string.isRequired,
     Movies: PropTypes.arrayOf(
       PropTypes.shape({
+        _id: PropTypes.string.isRequired,
         Title: PropTypes.string.isRequired,
         ImagePath: PropTypes.string.isRequired,
         ReleaseYear: PropTypes.string.isRequired
-      }))
-  }).isRequired
+      })
+    )
+  }).isRequired,
+  onBackClick: PropTypes.func.isRequired
 };
