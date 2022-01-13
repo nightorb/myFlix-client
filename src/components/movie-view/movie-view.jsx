@@ -18,7 +18,7 @@ export class MovieView extends React.Component {
       headers: { Authorization: `Bearer ${token}` },
       method: 'POST'
     })
-    .then(response =>{
+    .then(() => {
       alert('Movie added to your favorites');
     })
     .catch(err => {
@@ -75,6 +75,7 @@ export class MovieView extends React.Component {
 
 MovieView.propTypes = {
   movie: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
     Title: PropTypes.string.isRequired,
     Description: PropTypes.string.isRequired,
     ImagePath: PropTypes.string.isRequired,
@@ -94,7 +95,9 @@ MovieView.propTypes = {
         Name: PropTypes.string.isRequired,
         BirthYear: PropTypes.string.isRequired,
         Movies: PropTypes.array.isRequired
-      })),
+      })
+    ),
     Featured: PropTypes.bool.isRequired
-  }).isRequired
+  }).isRequired,
+  onBackClick: PropTypes.func.isRequired
 };
