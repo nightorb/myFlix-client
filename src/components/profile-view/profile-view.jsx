@@ -47,7 +47,7 @@ export class ProfileView extends React.Component {
           Birthday: data.Birthday
         });
 
-        localStorage.setItem('user', data.Username);
+        localStorage.setItem('user', data.Username); // or "this.state.Username"?
         console.log(data);
         console.log(this.state.Username);
         alert('Profile updated')
@@ -59,19 +59,31 @@ export class ProfileView extends React.Component {
   }
 
   setUsername(value) {
-    this.setState(value)
+    this.setState({
+      Username: value
+    });
+    this.Username = value;
   }
 
   setPassword(value) {
-    this.setState(value)
+    this.setState({
+      Password: value
+    });
+    this.Password = value;
   }
 
   setEmail(value) {
-    this.setState(value)
+    this.setState({
+      Email: value
+    });
+    this.Email = value;
   }
 
   setBirthday(value) {
-    this.setState(value)
+    this.setState({
+      Birthday: value
+    });
+    this.Birthday = value;
   }
 
   deleteUser() {
@@ -113,12 +125,11 @@ export class ProfileView extends React.Component {
   }
 
   render() {
-    const { user } = this.state;
-    const { updateUser, setUsername, setPassword, setEmail, setBirthday, onBackClick } = this.props;
+    const { user, Username, Email, Birthday, FavoriteMovies } = this.state;
+    const { onBackClick } = this.props;
 
-    if (user === null) {
-      return 'Loading';
-    }
+    if (user === null) return 'Loading';
+
     return (
       <div>
       <Row>
@@ -128,11 +139,11 @@ export class ProfileView extends React.Component {
               <h4>Your Info</h4>
               <div className="user-username">
                 <span className="label">Username: </span>
-                <span className="value">{user.Username}</span>
+                <span className="value">{Username}</span>
               </div>
               <div className="user-email">
                 <span className="label">Email: </span>
-                <span className="value">{user.Email}</span>
+                <span className="value">{Email}</span>
               </div>
             </Card.Body>
           </Card>
@@ -149,8 +160,8 @@ export class ProfileView extends React.Component {
                   <Form.Label>Username:</Form.Label>
                   <Form.Control
                     type="text"
-                    value={user.Username}
-                    onChange={e => setUsername(e.target.value)}
+                    value={Username}
+                    onChange={e => this.setUsername(e.target.value)}
                     placeholder="Enter a new username"
                   />
                 </Form.Group>
@@ -160,7 +171,7 @@ export class ProfileView extends React.Component {
                   <Form.Control
                     type="password"
                     value={user.Password}
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={e => this.setPassword(e.target.value)}
                     placeholder="Your password must be 8 or more characters"
                   />
                 </Form.Group>
@@ -169,8 +180,8 @@ export class ProfileView extends React.Component {
                   <Form.Label>Email:</Form.Label>
                   <Form.Control
                     type="email"
-                    value={user.Email}
-                    onChange={e => setEmail(e.target.value)}
+                    value={Email}
+                    onChange={e => this.setEmail(e.target.value)}
                     placeholder="Enter a new email adress"
                   />
                 </Form.Group>
@@ -179,12 +190,12 @@ export class ProfileView extends React.Component {
                   <Form.Label>Birthday:</Form.Label>
                   <Form.Control
                     type="date"
-                    value={user.Birthday}
-                    onChange={e => setBirthday(e.target.value)}
+                    value={Birthday}
+                    onChange={e => this.setBirthday(e.target.value)}
                   />
                 </Form.Group>
 
-                <Button variant="primary" type="submit" onClick={updateUser}>Update</Button>
+                <Button variant="primary" type="submit" onClick={() => this.updateUser()}>Update</Button>
               </Form>
             </Card.Body>
           </Card>
@@ -195,7 +206,7 @@ export class ProfileView extends React.Component {
       <Row>
         <h3>Favorite Movies</h3>
 
-        { user.favoriteMovies && user.favoriteMovies.map((movie) => {
+        { FavoriteMovies && FavoriteMovies.map((movie) => {
           <Col key={movie._id}>
             <MovieCard movie={movie} />
           </Col>
@@ -248,11 +259,5 @@ ProfileView.propTypes = {
     )
   }).isRequired,
   getUser: PropTypes.func.isRequired,
-  onLoggedOut: PropTypes.func.isRequired,
-  onBackClick: PropTypes.func.isRequired,
-  setUsername: PropTypes.func.isRequired,
-  setPassword: PropTypes.func.isRequired,
-  setEmail: PropTypes.func.isRequired,
-  setBirthday: PropTypes.func.isRequired,
-  updateUser: PropTypes.func.isRequired,
+  onBackClick: PropTypes.func.isRequired
 };
