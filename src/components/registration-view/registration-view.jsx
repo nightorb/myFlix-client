@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Col, Form, Button, Card } from 'react-bootstrap';
 
-export function RegistrationView(props) {
+export function RegistrationView() {
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ email, setEmail ] = useState('');
@@ -18,9 +18,7 @@ export function RegistrationView(props) {
       Birthday: birthday
     })
     .then(response => {
-      const data = response.data;
-      props.onLoggedIn(data);
-      console.log(data);
+      console.log(response.data);
       window.open('/', '_self');
     })
     .catch(err => {
@@ -87,7 +85,7 @@ export function RegistrationView(props) {
           <Card.Text>
             Already have an account?
           </Card.Text>
-          <Button variant="secondary">Login</Button>
+          <Button href="/" variant="secondary">Login</Button>
         </Card.Footer>
       </Card>
     </Col>
@@ -100,7 +98,5 @@ RegistrationView.propTypes = {
     Password: PropTypes.string.isRequired,
     Email: PropTypes.string.isRequired,
     Birthday: PropTypes.string
-  }),
-  handleRegister: PropTypes.func.isRequired,
-  onLoggedIn: PropTypes.func.isRequired
+  })
 };
