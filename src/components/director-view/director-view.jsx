@@ -4,11 +4,6 @@ import { Link } from 'react-router-dom';
 import { Col, Button } from 'react-bootstrap';
 
 export class DirectorView extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { director, onBackClick } = this.props;
 
