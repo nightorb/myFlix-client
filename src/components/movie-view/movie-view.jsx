@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { Button, Image } from 'react-bootstrap';
 
 export class MovieView extends React.Component {
-
   constructor(props) {
     super(props);
   }
