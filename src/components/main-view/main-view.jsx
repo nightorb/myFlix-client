@@ -35,7 +35,6 @@ class MainView extends React.Component {
       });
       this.getMovies(accessToken);
       this.getDirectors(accessToken);
-      this.getUser(accessToken);
     }
   }
 
@@ -70,20 +69,6 @@ class MainView extends React.Component {
     });
   }
 
-  getUser(user, token) {
-    axios.get(`https://nightorbs-myflix.herokuapp.com/users/${user.Username}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    .then(response => {
-      this.setState({
-        user: response.data
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
-
   // when user successfully logs in, this function updates user property in state to that particular user
   onLoggedIn(authData) {
     console.log(authData);
@@ -98,12 +83,21 @@ class MainView extends React.Component {
     this.getUser(authData.token);
   }
 
-  onLoggedOut() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    this.setState({
-      user: null
-    });
+  getUser() {
+    const user = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+
+    axios.get(`https://nightorbs-myflix.herokuapp.com/users/${user.Username}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(response => {
+      this.setState({
+        user: response.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   render() {
@@ -179,7 +173,7 @@ class MainView extends React.Component {
               if (movies.length === 0) return <div className="main-view" />;
 
               return (
-                <ProfileView getUser={() => this.getUser(user) } onBackClick={() => history.goBack()} />
+                <ProfileView getUser={() => this.getUser() } onBackClick={() => history.goBack()} />
               )
             }} />
           </Row>
