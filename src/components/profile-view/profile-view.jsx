@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-// import { Link } from 'react-router-dom';
 import { Row, Col, Form, Button, Card } from 'react-bootstrap';
 
 import { MovieCard } from '../movie-card/movie-card';
@@ -9,18 +8,41 @@ import { MovieCard } from '../movie-card/movie-card';
 export class ProfileView extends React.Component {
   constructor() {
     super();
+
     this.state = {
-      user: null,
-      username: null,
-      password: null,
-      email: null,
-      birthday: null,
-      favoriteMovies: []
+      Username: null,
+      Password: null,
+      Email: null,
+      Birthday: null,
+      FavoriteMovies: []
     };
   }
 
   componentDidMount() {
-    this.props.getUser();
+    this.getUser();
+  }
+
+  getUser() {
+    const user = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+
+    axios.get(`https://nightorbs-myflix.herokuapp.com/users/${user.Username}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(response => {
+      const data = response.data;
+
+      this.setState({
+        Username: data.Username,
+        Password: data.Password,
+        Email: data.Email,
+        Birthday: data.Birthday,
+        FavoriteMovies: data.FavoriteMovies
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   updateUser(e) {
@@ -126,7 +148,7 @@ export class ProfileView extends React.Component {
 
   render() {
     const { user, Username, Email, Birthday, FavoriteMovies } = this.state;
-    const { onBackClick } = this.props;
+    const { movie, onBackClick } = this.props;
 
     if (user === null) return 'Loading';
 
@@ -145,6 +167,10 @@ export class ProfileView extends React.Component {
                 <span className="label">Email: </span>
                 <span className="value">{Email}</span>
               </div>
+              <div className="user-birthday">
+                <span className="label">Birthday: </span>
+                <span className="value">{Birthday}</span>
+              </div>
             </Card.Body>
           </Card>
         </Col>
@@ -155,12 +181,23 @@ export class ProfileView extends React.Component {
             </Card.Header>
 
             <Card.Body>
-              <Form className="profile-form">
+              <Form 
+                className="profile-form"
+                onSubmit={e => 
+                  this.updateUser(
+                    e,
+                    this.Username,
+                    this.Password,
+                    this.Email,
+                    this.Birthday
+                  )
+                }
+              >
                 <Form.Group className="mb-3" controlId="formUsername">
                   <Form.Label>Username:</Form.Label>
                   <Form.Control
                     type="text"
-                    value={Username}
+                    name="Username"
                     onChange={e => this.setUsername(e.target.value)}
                     placeholder="Enter a new username"
                   />
@@ -170,7 +207,7 @@ export class ProfileView extends React.Component {
                   <Form.Label>Password:</Form.Label>
                   <Form.Control
                     type="password"
-                    value={user.Password}
+                    name="Password"
                     onChange={e => this.setPassword(e.target.value)}
                     placeholder="Your password must be 8 or more characters"
                   />
@@ -180,7 +217,7 @@ export class ProfileView extends React.Component {
                   <Form.Label>Email:</Form.Label>
                   <Form.Control
                     type="email"
-                    value={Email}
+                    name="Email"
                     onChange={e => this.setEmail(e.target.value)}
                     placeholder="Enter a new email adress"
                   />
@@ -190,7 +227,7 @@ export class ProfileView extends React.Component {
                   <Form.Label>Birthday:</Form.Label>
                   <Form.Control
                     type="date"
-                    value={Birthday}
+                    name="Birthday"
                     onChange={e => this.setBirthday(e.target.value)}
                   />
                 </Form.Group>
@@ -205,38 +242,17 @@ export class ProfileView extends React.Component {
 
       <Row>
         <h3>Favorite Movies</h3>
-
-        { FavoriteMovies && FavoriteMovies.map((movie) => {
-          <Col key={movie._id}>
-            <MovieCard movie={movie} />
-          </Col>
-        })}
-
-        {/* <Card>
-          <Card.Body>
-            <Row>
-              <h4>Favorite Movies</h4>
-            </Row>
-            <Row>
-              {favoriteMovies.map(({ ImagePath, Title, _id }) => {
-                return (
-                  <Col xs={12} md={6} lg={3} key={_id} className="favorite-movies">
-                    <Figure>
-                      <Link to={`/movies/${movies._id}`}>
-                        <Figure.Image src={ImagePath} alt={Title} />
-                        <Figure.Caption>
-                          {Title}
-                        </Figure.Caption>
-                      </Link>
-                    </Figure>
-                    <Button variant="secondary" onClick={() => removeFavorite(_id)}>Remove from list</Button>
-                  </Col>
-                )
-              })}
-            </Row>
-          </Card.Body>
-        </Card> */}
-
+          {FavoriteMovies.lenght === 0 && (
+            <div>No favorite movies</div>
+          )}
+          {FavoriteMovies.lenght > 0 && FavoriteMovies.map(movieId => {
+            movie.find(m => m._id === movieId)
+            return (
+              <Col key={movie._id}>
+                <MovieCard movie={movie} />
+              </Col>
+            )
+          })}
       </Row>
       </div>
     );
@@ -244,7 +260,7 @@ export class ProfileView extends React.Component {
 }
 
 ProfileView.propTypes = {
-  user: PropTypes.shape({
+  profile: PropTypes.shape({
     Username: PropTypes.string.isRequired,
     Password: PropTypes.string.isRequired,
     Email: PropTypes.string.isRequired,
@@ -257,7 +273,7 @@ ProfileView.propTypes = {
         ReleaseYear: PropTypes.string.isRequired
       })
     )
-  }).isRequired,
+  }),
   getUser: PropTypes.func.isRequired,
   onBackClick: PropTypes.func.isRequired
 };
