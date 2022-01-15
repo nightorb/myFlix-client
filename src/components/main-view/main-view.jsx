@@ -83,16 +83,13 @@ class MainView extends React.Component {
     this.getUser(authData.token);
   }
 
-  getUser() {
-    const user = localStorage.getItem('user');
-    const token = localStorage.getItem('token');
-
-    axios.get(`https://nightorbs-myflix.herokuapp.com/users/${user.Username}`, {
+  getUsers(token) {
+    axios.get('https://nightorbs-myflix.herokuapp.com/users/', {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
       this.setState({
-        user: response.data
+        users: response.data
       });
     })
     .catch(err => {
