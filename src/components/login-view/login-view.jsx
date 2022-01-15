@@ -18,8 +18,7 @@ export function LoginView(props) {
       Password: password
     })
     .then(response => {
-      const data = response.data;
-      props.onLoggedIn(data);
+      props.onLoggedIn(response.data);
     })
     .catch(err => {
       console.log(err + 'no such user');
@@ -53,7 +52,7 @@ export function LoginView(props) {
           <Card.Text>
             Don't have an account?
           </Card.Text>
-          <Button variant="secondary">Sign up</Button>
+          <Button href="/register" variant="secondary">Sign up</Button>
         </Card.Footer>
       </Card>
     </Col>
