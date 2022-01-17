@@ -1,0 +1,16 @@
+$primary: #DF611C;
+
+.navbar {
+  background-color: darken($primary, 10%);
+  height: 75px;
+  font-size: 20px;
+  .navbar-nav {
+    background-color: darken($primary, 10%);
+  }
+  button {
+    background-color: $primary;
+    border: none;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2) !important;
+    font-size: inherit;
+  }
+}
