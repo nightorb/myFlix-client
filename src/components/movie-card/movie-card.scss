@@ -1,0 +1,23 @@
+$background: #1C1B1B;
+$primary: #DF611C;
+
+.movie-card-container {
+  padding: 0;
+  .movie-card {
+    border: none;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+    img {
+      filter: brightness(0.9);
+    }
+    .card-body,
+    .card-title,
+    .card-text {
+      background-color: lighten($background, 4%);  
+    }
+    button {
+      background-color: $primary;
+      border: none;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6) !important;
+    }
+  }
+}
