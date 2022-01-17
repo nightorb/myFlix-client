@@ -11,9 +11,9 @@ export class MovieView extends React.Component {
 
   addFavoriteMovie() {
     const token = localStorage.getItem('token'),
-      username = localStorage.getItem('user');
+      user = localStorage.getItem('user');
 
-    axios.post(`https://nightorbs-myflix.herokuapp.com/users/${username}/favorites/${this.props.movie._id}`, {}, {
+    axios.post(`https://nightorbs-myflix.herokuapp.com/users/${user}/favorites/${this.props.movie._id}`, {}, {
       headers: { Authorization: `Bearer ${token}` },
       method: 'POST'
     })
@@ -64,9 +64,9 @@ export class MovieView extends React.Component {
           }
         </div>
 
-        <Button variant="danger" value={movie._id} onClick={(e) => this.addFavoriteMovie(e, movie)}>Add to Favorites</Button>
+        <Button variant="danger" value={movie._id} onClick={() => this.addFavoriteMovie(movie)}>Add to Favorites</Button>
 
-        <Button variant="primary" onClick={() => { onBackClick(); }}>Back</Button>
+        <Button onClick={() => { onBackClick(); }}>Back</Button>
       </div>
     );
   }
