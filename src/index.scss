@@ -1,5 +1,20 @@
-$color: steelblue;
+$background: #1C1B1B;
+$primary: #DF611C;
+$secondary: #00918C;
+$font1: 'Rubik', sans-serif;
+$font2: 'Ropa Sans', sans-serif;
 
-.my-flix {
-  color: $color;
+* {
+  background-color: $background;
+  color: #fff;
+  font-family: $font2;
+}
+
+button {
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: lighten($primary, 7%) !important;
+    box-shadow: none !important;
+  }
 }
