@@ -1,0 +1,29 @@
+.main-view {
+  background-color: #1A1918;
+  color: #fff;
+}
+
+.navbar {
+  background-color: #00B3AC;
+}
+
+.movie-card-container {
+  padding: 0;
+}
+.movie-card-container .movie-card {
+  border: none;
+  box-shadow: 0 5px 10px black;
+}
+.movie-card-container .movie-card .card-body {
+  background-image: linear-gradient(160deg, #ab3c00, #de4d00);
+}
+.movie-card-container .movie-card button {
+  background-color: #ff5e07;
+  border: none;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+.movie-card-container .movie-card button:hover, .movie-card-container .movie-card button:focus, .movie-card-container .movie-card button:active {
+  background-color: #FF752B;
+}
+
+/*# sourceMappingURL=index.8fa38637.css.map */
