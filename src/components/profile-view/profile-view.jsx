@@ -20,13 +20,14 @@ export class ProfileView extends React.Component {
 
   componentDidMount() {
     this.getUser();
+    console.log(this.state);
   }
 
   getUser() {
     const user = localStorage.getItem('user');
     const token = localStorage.getItem('token');
 
-    axios.get(`https://nightorbs-myflix.herokuapp.com/users/${user.Username}`, {
+    axios.get(`https://nightorbs-myflix.herokuapp.com/users/${user}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
@@ -34,11 +35,13 @@ export class ProfileView extends React.Component {
 
       this.setState({
         Username: data.Username,
-        Password: data.Password,
         Email: data.Email,
         Birthday: data.Birthday,
         FavoriteMovies: data.FavoriteMovies
       });
+      console.log(data);
+      console.log(this.state);
+      console.log(data.FavoriteMovies._id);
     })
     .catch(err => {
       console.log(err);
@@ -50,7 +53,7 @@ export class ProfileView extends React.Component {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
 
-    axios.put(`https://nightorbs-myflix.herokuapp.com/users/${user.Username}`,
+    axios.put(`https://nightorbs-myflix.herokuapp.com/users/${user}`,
       {
         Username: this.state.Username,
         Password: this.state.Password,
@@ -69,7 +72,7 @@ export class ProfileView extends React.Component {
           Birthday: data.Birthday
         });
 
-        localStorage.setItem('user', data.Username); // or "this.state.Username"?
+        localStorage.setItem('user', data.Username);
         console.log(data);
         console.log(this.state.Username);
         alert('Profile updated')
@@ -115,7 +118,7 @@ export class ProfileView extends React.Component {
       const token = localStorage.getItem('token');
       const user = localStorage.getItem('user');
 
-      axios.delete(`https://nightorbs-myflix.herokuapp.com/users/${user.Username}`, {
+      axios.delete(`https://nightorbs-myflix.herokuapp.com/users/${user}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(() => {
@@ -134,7 +137,7 @@ export class ProfileView extends React.Component {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
 
-    axios.delete(`https://nightorbs-myflix.herokuapp.com/users/${user.Username}/favorites/${movie._id}`, {
+    axios.delete(`https://nightorbs-myflix.herokuapp.com/users/${user}/favorites/${movie._id}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(() => {
@@ -148,7 +151,7 @@ export class ProfileView extends React.Component {
 
   render() {
     const { user, Username, Email, Birthday, FavoriteMovies } = this.state;
-    const { movie, onBackClick } = this.props;
+    const { onBackClick } = this.props;
 
     if (user === null) return 'Loading';
 
@@ -181,18 +184,7 @@ export class ProfileView extends React.Component {
             </Card.Header>
 
             <Card.Body>
-              <Form 
-                className="profile-form"
-                onSubmit={e => 
-                  this.updateUser(
-                    e,
-                    this.Username,
-                    this.Password,
-                    this.Email,
-                    this.Birthday
-                  )
-                }
-              >
+              <Form className="profile-form" onSubmit={e => this.updateUser(e)}>
                 <Form.Group className="mb-3" controlId="formUsername">
                   <Form.Label>Username:</Form.Label>
                   <Form.Control
@@ -232,27 +224,23 @@ export class ProfileView extends React.Component {
                   />
                 </Form.Group>
 
-                <Button variant="primary" type="submit" onClick={() => this.updateUser()}>Update</Button>
+                <Button type="submit" onClick={() => this.updateUser()}>Update</Button>
+                <Button className="m-2" type="submit" onClick={() => this.deleteUser()}>Delete Account</Button>
               </Form>
             </Card.Body>
           </Card>
-          <Button variant="primary" onClick={() => { onBackClick(); }}>Back</Button>
+          <Button onClick={() => { onBackClick(); }}>Back</Button>
         </Col>
       </Row>
 
       <Row>
         <h3>Favorite Movies</h3>
-          {FavoriteMovies.lenght === 0 && (
-            <div>No favorite movies</div>
-          )}
-          {FavoriteMovies.lenght > 0 && FavoriteMovies.map(movieId => {
-            movie.find(m => m._id === movieId)
-            return (
-              <Col key={movie._id}>
-                <MovieCard movie={movie} />
-              </Col>
-            )
-          })}
+          { FavoriteMovies && FavoriteMovies.map(movie => (
+            <Col key={FavoriteMovies._id}>
+              {console.log(FavoriteMovies._id)}
+              <MovieCard movie={{movie}} />
+            </Col>
+          ))}
       </Row>
       </div>
     );
@@ -264,7 +252,7 @@ ProfileView.propTypes = {
     Username: PropTypes.string.isRequired,
     Password: PropTypes.string.isRequired,
     Email: PropTypes.string.isRequired,
-    Birthday: PropTypes.string.isRequired,
+    Birthday: PropTypes.string,
     FavoriteMovies: PropTypes.arrayOf(
       PropTypes.shape({
         _id: PropTypes.string.isRequired,
