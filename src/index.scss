@@ -8,9 +8,23 @@ $font2: 'Ropa Sans', sans-serif;
   background-color: $background;
   color: #fff;
   font-family: $font2;
+  font-size: 18px;
+}
+
+a {
+  color: $primary !important;
+  &:hover,
+  &:focus,
+  &:active {
+    color: lighten($primary, 7%) !important;
+    transition: 0.2s;
+  }
 }
 
 button {
+  background-color: $primary !important;
+  border: none !important;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6);
   &:hover,
   &:focus,
   &:active {
