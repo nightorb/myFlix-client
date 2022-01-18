@@ -6,31 +6,86 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
 }
 .movie-card-container .movie-card img {
-  filter: brightness(0.9);
+  filter: brightness(0.85);
 }
 .movie-card-container .movie-card .card-body,
 .movie-card-container .movie-card .card-title,
 .movie-card-container .movie-card .card-text {
   background-color: #262525;
 }
-.movie-card-container .movie-card button {
-  background-color: #DF611C;
-  border: none;
+.movie-card-container .movie-card .card-title {
+  font-size: 1.3rem;
+  color: #e67639;
+}
+.movie-card-container .movie-card .card-text {
+  color: rgba(255, 255, 255, 0.5);
+}
+.movie-card-container .movie-card .button-cards {
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6) !important;
+}
+.movie-card-container .movie-card .button-cards:hover, .movie-card-container .movie-card .button-cards:focus, .movie-card-container .movie-card .button-cards:active {
+  box-shadow: none !important;
+}
+.movie-view .button-fav {
+  background-color: #00918C !important;
+}
+.movie-view .button-fav:hover, .movie-view .button-fav:focus, .movie-view .button-fav:active {
+  background-color: #006d6a !important;
+}
+
+.favorite-movies {
+  margin-bottom: 15px;
+}
+.favorite-movies figure {
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: auto;
+  width: 100%;
+}
+.favorite-movies figure img {
+  display: block;
+  height: 400px;
+  margin: auto;
+}
+.favorite-movies figure figcaption {
+  text-align: center;
+}
+.favorite-movies button.btn {
+  display: block;
+  margin: auto;
+}
+
+.card {
+  margin-bottom: 15px;
 }
 .navbar {
   background-color: #b24d16;
   height: 75px;
-  font-size: 20px;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.6);
+}
+.navbar .navbar-brand {
+  color: whitesmoke !important;
+  font-size: 1.75rem;
 }
 .navbar .navbar-nav {
   background-color: #b24d16;
 }
+.navbar .navbar-nav .nav-link {
+  color: whitesmoke !important;
+  font-size: 1.15rem;
+}
+.navbar .navbar-nav .nav-link:hover, .navbar .navbar-nav .nav-link:focus {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
 .navbar button {
-  background-color: #DF611C;
-  border: none;
+  background-color: #e67639 !important;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2) !important;
-  font-size: inherit;
+  font-size: 1.15rem;
+}
+.navbar button:hover, .navbar button:focus, .navbar button:active {
+  background-color: #DF611C !important;
 }
 .main-view {
   max-width: 1400px;
@@ -40,8 +95,22 @@
   background-color: #1C1B1B;
   color: #fff;
   font-family: "Ropa Sans", sans-serif;
+  font-size: 18px;
 }
 
+a {
+  color: #DF611C !important;
+}
+a:hover, a:focus, a:active {
+  color: #e67639 !important;
+  transition: 0.2s;
+}
+
+button {
+  background-color: #DF611C !important;
+  border: none !important;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6);
+}
 button:hover, button:focus, button:active {
   background-color: #e67639 !important;
   box-shadow: none !important;
