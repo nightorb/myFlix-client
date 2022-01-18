@@ -23,6 +23,7 @@ class MainView extends React.Component {
     this.state = {
       movies: [],
       directors: [],
+      actors: [],
       user: null
     };
   }
@@ -37,6 +38,7 @@ class MainView extends React.Component {
       });
       this.getMovies(accessToken);
       this.getDirectors(accessToken);
+      this.getActors(accessToken);
     }
   }
 
@@ -51,6 +53,7 @@ class MainView extends React.Component {
       this.setState({
         movies: response.data
       });
+      // console.log(this.state.movies);
     })
     .catch(err => {
       console.log(err);
@@ -65,6 +68,22 @@ class MainView extends React.Component {
       this.setState({
         directors: response.data
       });
+      // console.log(this.state.directors);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+
+  getActors(token) {
+    axios.get('https://nightorbs-myflix.herokuapp.com/actors', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(response => {
+      this.setState({
+        actors: response.data
+      });
+      // console.log(this.state.actors);
     })
     .catch(err => {
       console.log(err);
@@ -82,21 +101,7 @@ class MainView extends React.Component {
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
     this.getDirectors(authData.token);
-    this.getUser(authData.token);
-  }
-
-  getUsers(token) {
-    axios.get('https://nightorbs-myflix.herokuapp.com/users/', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    .then(response => {
-      this.setState({
-        users: response.data
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    })
+    this.getActors(authData);
   }
 
   render() {
@@ -148,10 +153,10 @@ class MainView extends React.Component {
           <Route path="/directors/:name" render={({ match, history }) => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
 
-            if (directors.length === 0) return <div className="main-view" />;
+            if (movies.length === 0) return <div className="main-view" />;
 
             return (
-              <DirectorView director={directors.find(d => d.Director.Name === match.params.name).Director} onBackClick={() => history.goBack()} />
+              <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} onBackClick={() => history.goBack()} />
             )
           }} />
 
