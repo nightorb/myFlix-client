@@ -5,6 +5,8 @@ import { Row, Col, Form, Button, Card } from 'react-bootstrap';
 
 import { MovieCard } from '../movie-card/movie-card';
 
+import './profile-view.scss';
+
 export class ProfileView extends React.Component {
   constructor() {
     super();
@@ -20,7 +22,7 @@ export class ProfileView extends React.Component {
 
   componentDidMount() {
     this.getUser();
-    console.log(this.state);
+    this.getFavoriteMovies();
   }
 
   getUser() {
@@ -32,16 +34,36 @@ export class ProfileView extends React.Component {
     })
     .then(response => {
       const data = response.data;
+      console.log('response data: ', response.data);
+      // console.log(this.state);
 
       this.setState({
         Username: data.Username,
+        Password: data.Password,
         Email: data.Email,
         Birthday: data.Birthday,
-        FavoriteMovies: data.FavoriteMovies
       });
-      console.log(data);
-      console.log(this.state);
-      console.log(data.FavoriteMovies._id);
+      // console.log(data);
+      // console.log(this.state);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
+  getFavoriteMovies() {
+    const user = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+
+    axios.get(`https://nightorbs-myflix.herokuapp.com/users/${user}/favorites`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(response => {
+      // console.log(response.data);
+      this.setState({
+        FavoriteMovies: response.data.FavoriteMovies
+      });
+      // console.log(response.data.FavoriteMovies._id);
     })
     .catch(err => {
       console.log(err);
@@ -55,26 +77,25 @@ export class ProfileView extends React.Component {
 
     axios.put(`https://nightorbs-myflix.herokuapp.com/users/${user}`,
       {
-        Username: this.state.Username,
-        Password: this.state.Password,
-        Email: this.state.Email,
-        Birthday: this.state.Birthday
+        Username: user.Username,
+        Password: user.Password,
+        Email: user.Email,
+        Birthday: user.Birthday
       }, {
         headers: { Authorization: `Bearer ${token}` }
-      })
+      }, console.log(this.state))
       .then(response => {
         const data = response.data;
-
+        console.log(data);
         this.setState({
           Username: data.Username,
           Password: data.Password,
           Email: data.Email,
           Birthday: data.Birthday
         });
+        console.log(this.state);
 
         localStorage.setItem('user', data.Username);
-        console.log(data);
-        console.log(this.state.Username);
         alert('Profile updated')
         window.location.reload();
       })
@@ -237,7 +258,7 @@ export class ProfileView extends React.Component {
         <h3>Favorite Movies</h3>
           { FavoriteMovies && FavoriteMovies.map(movie => (
             <Col key={FavoriteMovies._id}>
-              {console.log(FavoriteMovies._id)}
+              {/* {console.log(FavoriteMovies._id)} */}
               <MovieCard movie={{movie}} />
             </Col>
           ))}
