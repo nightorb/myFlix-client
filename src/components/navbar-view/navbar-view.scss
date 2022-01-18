@@ -3,14 +3,30 @@ $primary: #DF611C;
 .navbar {
   background-color: darken($primary, 10%);
   height: 75px;
-  font-size: 20px;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.6);
+  .navbar-brand {
+    color: whitesmoke !important;
+    font-size: 1.75rem;
+  }
   .navbar-nav {
     background-color: darken($primary, 10%);
+    .nav-link {
+      color: whitesmoke !important;
+      font-size: 1.15rem;
+      &:hover,
+      &:focus {
+        color:rgba(255, 255, 255, 0.5) !important;
+      }
+    }
   }
   button {
-    background-color: $primary;
-    border: none;
+    background-color: lighten($primary, 7%) !important;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2) !important;
-    font-size: inherit;
+    font-size: 1.15rem;
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $primary !important;
+    }
   }
 }
