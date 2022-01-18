@@ -1,0 +1,14 @@
+$background: #1C1B1B;
+$primary: #DF611C;
+$secondary: #00918C;
+
+.movie-view {
+  .button-fav {
+    background-color: $secondary !important;
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: darken($secondary, 7%) !important;
+    }
+  }
+}

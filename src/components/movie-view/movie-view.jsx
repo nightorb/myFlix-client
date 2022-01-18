@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Button, Image } from 'react-bootstrap';
 
+import './movie-view.scss';
+
 export class MovieView extends React.Component {
   constructor(props) {
     super(props);
@@ -44,16 +46,12 @@ export class MovieView extends React.Component {
 
         <div className="movie-genre">
           <span className="label">Genre: </span>
-          <Link to={`/genres/${movie.Genre.Name}`}>
-            <Button variant="link">{movie.Genre.Name}</Button>
-          </Link>
+          <Link to={`/genres/${movie.Genre.Name}`}>{movie.Genre.Name}</Link>
         </div>
 
         <div className="movie-director">
           <span className="label">Director: </span>
-          <Link to={`/directors/${movie.Director.Name}`}>
-            <Button variant="link">{movie.Director.Name}</Button>
-          </Link>
+          <Link to={`/directors/${movie.Director.Name}`}>{movie.Director.Name}</Link>
         </div>
 
         <div className="movie-actors">
@@ -64,9 +62,9 @@ export class MovieView extends React.Component {
           }
         </div>
 
-        <Button variant="danger" value={movie._id} onClick={() => this.addFavoriteMovie(movie)}>Add to Favorites</Button>
+        <Button className="button-fav" value={movie._id} onClick={() => this.addFavoriteMovie(movie)}>Add to Favorites</Button>
 
-        <Button onClick={() => { onBackClick(); }}>Back</Button>
+        <Button className="button-back" onClick={() => { onBackClick(); }}>Back</Button>
       </div>
     );
   }
