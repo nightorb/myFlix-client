@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Col, Form, Button, Card } from 'react-bootstrap';
 
+import './login-view.scss';
+
 export function LoginView(props) {
   // empty string inside useState is initial value of login variable
   // current state of username empty string
@@ -26,33 +28,45 @@ export function LoginView(props) {
   };
 
   return (
-    <Col xs={9} md={6} xl={4}>
-      <Card>
-        <Card.Header className="text-center" as="h4">
+    <Col className="login-view" xs={9} md={6} xl={4}>
+      <Card className="login-card">
+        <Card.Header className="login-card-hf text-center" as="h4">
           Log in to your account
         </Card.Header>
 
-        <Card.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="formUsername">
-              <Form.Label>Username:</Form.Label>
-              <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} required placeholder="Enter username" />
+        <Card.Body className="login-card-b">
+          <Form className="login-form">
+            <Form.Group className="login-form mb-3" controlId="formUsername">
+              <Form.Label className="login-form-label">Username:</Form.Label>
+              <Form.Control className="login-form-input shadow-none"
+                type="text"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+                placeholder="Enter username"
+                required
+              />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formPassword">
-              <Form.Label>Password:</Form.Label>
-              <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="Password" />
+            <Form.Group className="login-form mb-3" controlId="formPassword">
+              <Form.Label className="login-form-label">Password:</Form.Label>
+              <Form.Control className="login-form-input shadow-none"
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="Password"
+                required
+              />
             </Form.Group>
 
-            <Button variant="primary" type="submit" onClick={handleSubmit}>Login</Button>
+            <Button className="button-primary" type="submit" onClick={handleSubmit}>Login</Button>
           </Form>
         </Card.Body>
 
-        <Card.Footer className="text-muted text-center">
-          <Card.Text>
+        <Card.Footer className="login-card-hf text-center">
+          <Card.Text className="muted-text">
             Don't have an account?
           </Card.Text>
-          <Button href="/register" variant="secondary">Sign up</Button>
+          <Button className="button-secondary shadow-none" href="/register">Sign up</Button>
         </Card.Footer>
       </Card>
     </Col>
