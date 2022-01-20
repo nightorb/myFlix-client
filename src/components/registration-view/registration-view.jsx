@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Col, Form, Button, Card } from 'react-bootstrap';
 
+import './registration-view.scss';
+
 export function RegistrationView() {
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
@@ -27,17 +29,17 @@ export function RegistrationView() {
   }
 
   return (
-    <Col xs={9} md={6} xl={4}>
-      <Card>
-        <Card.Header className="text-center" as="h4">
+    <Col className="registration-view" xs={9} md={6} xl={4}>
+      <Card className="registration-card">
+        <Card.Header className="registration-card-hf text-center" as="h4">
           Create a free account
         </Card.Header>
 
-        <Card.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="formUsername">
-              <Form.Label>Username:</Form.Label>
-              <Form.Control
+        <Card.Body className="registration-card-b">
+          <Form className="registration-form">
+            <Form.Group className="registration-form mb-3" controlId="formUsername">
+              <Form.Label className="registration-form-label">Username:</Form.Label>
+              <Form.Control className="registration-form-input shadow-none"
                 type="text"
                 value={username}
                 onChange={e => setUsername(e.target.value)}
@@ -46,9 +48,9 @@ export function RegistrationView() {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formPassword">
-              <Form.Label>Password:</Form.Label>
-              <Form.Control
+            <Form.Group className="registration-form mb-3" controlId="formPassword">
+              <Form.Label className="registration-form-label">Password:</Form.Label>
+              <Form.Control className="registration-form-input shadow-none"
                 type="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
@@ -57,9 +59,9 @@ export function RegistrationView() {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formEmail">
-              <Form.Label>Email:</Form.Label>
-              <Form.Control
+            <Form.Group className="registration-form mb-3" controlId="formEmail">
+              <Form.Label className="registration-form-label">Email:</Form.Label>
+              <Form.Control className="registration-form-input shadow-none"
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
@@ -68,24 +70,24 @@ export function RegistrationView() {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBirthday">
-              <Form.Label>Birthday:</Form.Label>
-              <Form.Control
+            <Form.Group className="registration-form mb-3" controlId="formBirthday">
+              <Form.Label className="registration-form-label">Birthday:</Form.Label>
+              <Form.Control className="registration-form-input shadow-none"
                 type="date"
                 value={birthday}
                 onChange={e => setBirthday(e.target.value)}
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit" onClick={handleRegister}>Sign up</Button>
+            <Button className="button-primary" type="submit" onClick={handleRegister}>Sign up</Button>
           </Form>
         </Card.Body>
 
-        <Card.Footer className="text-muted text-center">
-          <Card.Text>
+        <Card.Footer className="registration-card-hf text-center">
+          <Card.Text className="muted-text">
             Already have an account?
           </Card.Text>
-          <Button href="/" variant="secondary">Login</Button>
+          <Button className="button-secondary shadow-none" href="/">Login</Button>
         </Card.Footer>
       </Card>
     </Col>
