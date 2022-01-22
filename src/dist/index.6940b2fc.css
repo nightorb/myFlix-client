@@ -1,0 +1,343 @@
+.navbar {
+  background-color: #b24d16;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.6);
+}
+.navbar .navbar-brand {
+  color: #F5F5F5 !important;
+  font-size: 2rem;
+  margin-right: 4rem;
+}
+.navbar .container,
+.navbar .navbar-nav,
+.navbar .navbar-brand,
+.navbar .navbar-collapse,
+.navbar .navbar-dropdown {
+  background-color: #b24d16 !important;
+}
+.navbar .navbar-dropdown {
+  cursor: pointer;
+}
+.navbar .dropdown {
+  margin-right: 1rem;
+}
+.navbar .dropdown-menu {
+  background-color: #9b4313 !important;
+  border: none;
+}
+.navbar .dropdown-menu .dropdown-item {
+  color: #F5F5F5 !important;
+}
+.navbar .dropdown-menu .dropdown-item:hover, .navbar .dropdown-menu .dropdown-item:focus {
+  background-color: #DF611C;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2) !important;
+}
+.navbar .dropdown-menu .dropdown-divider {
+  border-top: 3px solid #eb8f5d;
+}
+.navbar .nav-link {
+  color: #F5F5F5 !important;
+  font-size: 1.15rem;
+}
+.navbar .nav-link:hover, .navbar .nav-link:focus {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+.navbar button {
+  background-color: #e67639 !important;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2) !important;
+  font-size: 1.15rem;
+}
+.navbar button:hover, .navbar button:focus, .navbar button:active {
+  background-color: #DF611C !important;
+}
+.login-view {
+  align-content: center;
+}
+
+.login-card {
+  border: none !important;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+}
+.login-card .login-card-b,
+.login-card .login-form,
+.login-card .login-form-label {
+  background-color: #312f2f;
+}
+.login-card .login-card-b .login-form-input,
+.login-card .login-form .login-form-input,
+.login-card .login-form-label .login-form-input {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.login-card .login-card-b .login-form-input:focus,
+.login-card .login-form .login-form-input:focus,
+.login-card .login-form-label .login-form-input:focus {
+  border: 2px solid #e67639;
+}
+.login-card .login-card-hf {
+  background-color: #262525 !important;
+}
+.login-card .login-card-hf .card-text {
+  background-color: #262525;
+}
+.login-card .login-card-hf .button-secondary {
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6) !important;
+}
+.login-card .login-card-hf .button-secondary:hover, .login-card .login-card-hf .button-secondary:focus, .login-card .login-card-hf .button-secondary:active {
+  box-shadow: none !important;
+}
+.registration-view {
+  align-content: center;
+}
+
+.registration-card {
+  border: none !important;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+}
+.registration-card .registration-card-b,
+.registration-card .registration-form,
+.registration-card .registration-form-label {
+  background-color: #312f2f;
+}
+.registration-card .registration-card-b .registration-form-input,
+.registration-card .registration-form .registration-form-input,
+.registration-card .registration-form-label .registration-form-input {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.registration-card .registration-card-b .registration-form-input:focus,
+.registration-card .registration-form .registration-form-input:focus,
+.registration-card .registration-form-label .registration-form-input:focus {
+  border: 2px solid #e67639;
+}
+.registration-card .registration-card-hf {
+  background-color: #262525 !important;
+}
+.registration-card .registration-card-hf .card-text {
+  background-color: #262525;
+}
+.registration-card .registration-card-hf .button-secondary {
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6) !important;
+}
+.registration-card .registration-card-hf .button-secondary:hover, .registration-card .registration-card-hf .button-secondary:focus, .registration-card .registration-card-hf .button-secondary:active {
+  box-shadow: none !important;
+}
+.movie-card-container {
+  padding: 0;
+}
+.movie-card-container .movie-card {
+  border: none;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+}
+.movie-card-container .movie-card img {
+  filter: brightness(0.85);
+}
+.movie-card-container .movie-card .card-body,
+.movie-card-container .movie-card .card-title,
+.movie-card-container .movie-card .card-text {
+  background-color: #262525;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.movie-card-container .movie-card .card-title {
+  font-size: 1.3rem;
+  color: #e67639;
+}
+.movie-card-container .movie-card .button-primary {
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6) !important;
+}
+.movie-card-container .movie-card .button-primary:hover, .movie-card-container .movie-card .button-primary:focus, .movie-card-container .movie-card .button-primary:active {
+  box-shadow: none !important;
+}
+.movie-title {
+  font-size: 2.25rem !important;
+  color: #e67639 !important;
+}
+
+img {
+  max-height: 500px;
+  filter: brightness(0.85);
+}
+
+.button-secondary {
+  background-color: #00918C !important;
+}
+.button-secondary:hover, .button-secondary:focus, .button-secondary:active {
+  background-color: #006d6a !important;
+}
+.genre-name {
+  font-size: 2.25rem !important;
+  color: #e67639 !important;
+}
+.director-name {
+  font-size: 2.25rem !important;
+  color: #e67639 !important;
+}
+.profile-page,
+.favorite-movies {
+  font-size: 2.25rem !important;
+  color: #e67639 !important;
+}
+
+.update-card,
+.info-card {
+  border: none !important;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+}
+.update-card .update-card-b,
+.update-card .update-form,
+.update-card .update-form-label,
+.update-card .info-card-b,
+.update-card .user-username,
+.update-card .user-email,
+.update-card .user-birthday,
+.update-card .label,
+.update-card .value,
+.info-card .update-card-b,
+.info-card .update-form,
+.info-card .update-form-label,
+.info-card .info-card-b,
+.info-card .user-username,
+.info-card .user-email,
+.info-card .user-birthday,
+.info-card .label,
+.info-card .value {
+  background-color: #312f2f;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.update-card .update-card-b .update-form-input,
+.update-card .update-form .update-form-input,
+.update-card .update-form-label .update-form-input,
+.update-card .info-card-b .update-form-input,
+.update-card .user-username .update-form-input,
+.update-card .user-email .update-form-input,
+.update-card .user-birthday .update-form-input,
+.update-card .label .update-form-input,
+.update-card .value .update-form-input,
+.info-card .update-card-b .update-form-input,
+.info-card .update-form .update-form-input,
+.info-card .update-form-label .update-form-input,
+.info-card .info-card-b .update-form-input,
+.info-card .user-username .update-form-input,
+.info-card .user-email .update-form-input,
+.info-card .user-birthday .update-form-input,
+.info-card .label .update-form-input,
+.info-card .value .update-form-input {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.update-card .update-card-b .update-form-input:focus,
+.update-card .update-form .update-form-input:focus,
+.update-card .update-form-label .update-form-input:focus,
+.update-card .info-card-b .update-form-input:focus,
+.update-card .user-username .update-form-input:focus,
+.update-card .user-email .update-form-input:focus,
+.update-card .user-birthday .update-form-input:focus,
+.update-card .label .update-form-input:focus,
+.update-card .value .update-form-input:focus,
+.info-card .update-card-b .update-form-input:focus,
+.info-card .update-form .update-form-input:focus,
+.info-card .update-form-label .update-form-input:focus,
+.info-card .info-card-b .update-form-input:focus,
+.info-card .user-username .update-form-input:focus,
+.info-card .user-email .update-form-input:focus,
+.info-card .user-birthday .update-form-input:focus,
+.info-card .label .update-form-input:focus,
+.info-card .value .update-form-input:focus {
+  border: 2px solid #e67639;
+}
+.update-card .value,
+.info-card .value {
+  color: #00b5ae;
+}
+.update-card .update-card-hf,
+.update-card .info-card-hf,
+.info-card .update-card-hf,
+.info-card .info-card-hf {
+  background-color: #262525 !important;
+}
+.update-card .update-card-hf .card-text,
+.update-card .info-card-hf .card-text,
+.info-card .update-card-hf .card-text,
+.info-card .info-card-hf .card-text {
+  background-color: #262525;
+}
+.update-card .update-card-hf .button-secondary,
+.update-card .info-card-hf .button-secondary,
+.info-card .update-card-hf .button-secondary,
+.info-card .info-card-hf .button-secondary {
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6) !important;
+}
+.update-card .update-card-hf .button-secondary:hover, .update-card .update-card-hf .button-secondary:focus, .update-card .update-card-hf .button-secondary:active,
+.update-card .info-card-hf .button-secondary:hover,
+.update-card .info-card-hf .button-secondary:focus,
+.update-card .info-card-hf .button-secondary:active,
+.info-card .update-card-hf .button-secondary:hover,
+.info-card .update-card-hf .button-secondary:focus,
+.info-card .update-card-hf .button-secondary:active,
+.info-card .info-card-hf .button-secondary:hover,
+.info-card .info-card-hf .button-secondary:focus,
+.info-card .info-card-hf .button-secondary:active {
+  box-shadow: none !important;
+}
+
+.button-primary {
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6) !important;
+}
+.button-primary:hover, .button-primary:focus, .button-primary:active {
+  box-shadow: none !important;
+}
+.main-view {
+  max-width: 1400px;
+  min-height: calc(100vh - 75px);
+  margin: 0 auto !important;
+  align-content: flex-start;
+}
+
+
+
+* {
+  background-color: #1C1B1B;
+  color: #F5F5F5;
+  font-family: "Ropa Sans", sans-serif;
+  font-size: 20px;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.muted-text {
+  color: #A6A6A6;
+}
+
+a {
+  color: #DF611C !important;
+}
+a:hover, a:focus, a:active {
+  color: #e67639 !important;
+  transition: 0.2s;
+}
+
+button {
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6) !important;
+  border: none !important;
+}
+button:hover, button:focus, button:active {
+  box-shadow: none !important;
+}
+
+.button-primary {
+  background-color: #DF611C !important;
+}
+.button-primary:hover, .button-primary:focus, .button-primary:active {
+  background-color: #e67639 !important;
+}
+
+.button-secondary {
+  background-color: #00918C !important;
+  color: whitesmoke !important;
+  border: none !important;
+}
+.button-secondary:hover, .button-secondary:focus, .button-secondary:active {
+  background-color: #006d6a !important;
+  color: whitesmoke !important;
+}
+/*# sourceMappingURL=index.6940b2fc.css.map */
