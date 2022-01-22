@@ -1,6 +1,5 @@
 $background: #1C1B1B;
 $primary: #DF611C;
-$secondary: #00918C;
 
 .movie-card-container {
   padding: 0;
@@ -14,15 +13,14 @@ $secondary: #00918C;
     .card-title,
     .card-text {
       background-color: lighten($background, 4%);
+      border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 3px;
     }
     .card-title {
       font-size: 1.3rem;
       color: lighten($primary, 7%);
     }
-    .card-text {
-      color: rgba(255, 255, 255, 0.5);
-    }
-    .button-cards {
+    .button-primary {
       box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6) !important;
       &:hover,
       &:focus,
