@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Button, Image } from 'react-bootstrap';
+import { Row, Col, Button, Image } from 'react-bootstrap';
 
 import './movie-view.scss';
 
@@ -32,39 +32,42 @@ export class MovieView extends React.Component {
 
     return (
       <div className="movie-view">
-        <div className="movie-poster">
-          <Image src={movie.ImagePath} crossOrigin="anonymous" fluid />
-        </div>
+        <Row className="justify-content-sm-center">
+          <Col className="mb-4" sm={9} md={12}>
+            <div className="movie-title mb-2">{movie.Title}</div>
+            <Button className="button-secondary" value={movie._id} onClick={() => this.addFavoriteMovie(movie)}>Add to Favorites</Button>
+          </Col>
+        </Row>
 
-        <div className="movie-title">
-          <span className="value">{movie.Title}</span>
-        </div>
+        <Row className="justify-content-center">
+          <Col className="movie-poster order-md-1 mb-3 mb-md-4" sm={9} md={6}>
+            <Image className="rounded" src={movie.ImagePath} fluid />
+          </Col>
 
-        <div className="movie-description">
-          <span className="value">{movie.Description}</span>
-        </div>
+          <Col className="align-self-center" xs={12} sm={9} md={6}>
+            <div className="movie-description mb-3 mb-md-4">{movie.Description}</div>
 
-        <div className="movie-genre">
-          <span className="label">Genre: </span>
-          <Link to={`/genres/${movie.Genre.Name}`}>{movie.Genre.Name}</Link>
-        </div>
+            <div className="movie-genre mb-2 mb-md-3">
+              <span className="label">Genre: </span>
+              <Link to={`/genres/${movie.Genre.Name}`}>{movie.Genre.Name}</Link>
+            </div>
 
-        <div className="movie-director">
-          <span className="label">Director: </span>
-          <Link to={`/directors/${movie.Director.Name}`}>{movie.Director.Name}</Link>
-        </div>
+            <div className="movie-director mb-2 mb-md-3">
+              <span className="label">Director: </span>
+              <Link to={`/directors/${movie.Director.Name}`}>{movie.Director.Name}</Link>
+            </div>
 
-        <div className="movie-actors">
-          <span className="label">Actors: </span>
-          { movie.Actors.map((actor) => (
-            <Link key={actor.Name} to={`/actors/${actor.Name}`}>{actor.Name}</Link> ))
-            .reduce((prev, curr) => [ prev, ", ", curr ])
-          }
-        </div>
+            <div className="movie-actors mb-4 mb-md-5">
+              <span className="label">Actors: </span>
+              { movie.Actors.map((actor) => (
+                <Link key={actor._id} to={`/actors/${actor.Name}`}>{actor.Name}</Link> ))
+                .reduce((prev, curr) => [ prev, ", ", curr ])
+              }
+            </div>
 
-        <Button className="button-fav" value={movie._id} onClick={() => this.addFavoriteMovie(movie)}>Add to Favorites</Button>
-
-        <Button className="button-back" onClick={() => { onBackClick(); }}>Back</Button>
+            <Button className="button-primary" onClick={() => { onBackClick(); }}>Back</Button>
+          </Col>
+        </Row>
       </div>
     );
   }
