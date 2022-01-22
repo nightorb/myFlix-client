@@ -1,0 +1,37 @@
+$background: #1C1B1B;
+$primary: #DF611C;
+$secondary: #00918C;
+
+.registration-view {
+  align-content: center;
+}
+
+.registration-card {
+  border: none !important;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+  .registration-card-b,
+  .registration-form,
+  .registration-form-label {
+    background-color: lighten($background, 8%);
+    .registration-form-input {
+      background-color: rgba(255, 255, 255, 0.9);
+      &:focus {
+        border: 2px solid lighten($primary, 7%);
+      }
+    }
+  }
+  .registration-card-hf {
+    background-color: lighten($background, 4%) !important;    
+    .card-text {
+      background-color: lighten($background, 4%);
+    }
+    .button-secondary {
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6) !important;
+      &:hover,
+      &:focus,
+      &:active {
+        box-shadow: none !important;
+      }
+    }
+  }
+}
