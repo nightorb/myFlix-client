@@ -1,14 +1,23 @@
 $background: #1C1B1B;
 $primary: #DF611C;
 $secondary: #00918C;
-$font1: 'Rubik', sans-serif;
-$font2: 'Ropa Sans', sans-serif;
+$text: #F5F5F5;
+$muted-text: #A6A6A6;
+$font: 'Ropa Sans', sans-serif;
 
 * {
   background-color: $background;
-  color: #fff;
-  font-family: $font2;
-  font-size: 18px;
+  color: $text;
+  font-family: $font;
+  font-size: 20px;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.muted-text {
+  color: $muted-text;
 }
 
 a {
@@ -22,13 +31,32 @@ a {
 }
 
 button {
-  background-color: $primary !important;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6) !important;
   border: none !important;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6);
+  &:hover,
+  &:focus,
+  &:active {
+    box-shadow: none !important;
+  }
+}
+
+.button-primary {
+  background-color: $primary !important;
   &:hover,
   &:focus,
   &:active {
     background-color: lighten($primary, 7%) !important;
-    box-shadow: none !important;
+  }
+}
+
+.button-secondary {
+  background-color: $secondary !important;
+  color: whitesmoke !important;
+  border: none !important;
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: darken($secondary, 7%) !important;
+    color: whitesmoke !important;
   }
 }
