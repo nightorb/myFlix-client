@@ -14,9 +14,9 @@ export class MovieCard extends React.Component {
         <Card.Img variant="top" src={movie.ImagePath} />
         <Card.Body>
           <Card.Title>{movie.Title}</Card.Title>
-          <Card.Text>{movie.ReleaseYear}</Card.Text>
+          <Card.Text className="muted-text">{movie.ReleaseYear}</Card.Text>
           <Link to={`/movies/${movie._id}`}>
-            <Button className="button-cards shadow-none">More</Button>
+            <Button className="button-primary shadow-none">More</Button>
           </Link>
         </Card.Body>
       </Card>
@@ -28,7 +28,6 @@ MovieCard.propTypes = {
   movie: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     Title: PropTypes.string.isRequired,
-    Description: PropTypes.string.isRequired,
     ImagePath: PropTypes.string.isRequired,
     ReleaseYear: PropTypes.string.isRequired
   }).isRequired
