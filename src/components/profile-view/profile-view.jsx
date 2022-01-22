@@ -1,9 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Row, Col, Form, Button, Card } from 'react-bootstrap';
-
-import { MovieCard } from '../movie-card/movie-card';
 
 import './profile-view.scss';
 
@@ -23,6 +22,7 @@ export class ProfileView extends React.Component {
   componentDidMount() {
     this.getUser();
     this.getFavoriteMovies();
+    console.log('this.state inside componentDidMount: ', this.state);
   }
 
   getUser() {
@@ -43,7 +43,7 @@ export class ProfileView extends React.Component {
         Email: data.Email,
         Birthday: data.Birthday,
       });
-      // console.log(data);
+      console.log('reponse data favorite movies from getUser()', data.FavoriteMovies);
       // console.log(this.state);
     })
     .catch(err => {
@@ -63,30 +63,31 @@ export class ProfileView extends React.Component {
       this.setState({
         FavoriteMovies: response.data.FavoriteMovies
       });
-      // console.log(response.data.FavoriteMovies._id);
+      console.log('reponse data favorite movies from getFavoriteMovies(): ', response.data.FavoriteMovies);
+      console.log('this.state favorite movies from getFavoriteMovies(): ', this.state);
     })
     .catch(err => {
       console.log(err);
     })
   }
 
-  updateUser(e) {
-    e.preventDefault();
+  updateUser() {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
 
     axios.put(`https://nightorbs-myflix.herokuapp.com/users/${user}`,
       {
-        Username: user.Username,
-        Password: user.Password,
-        Email: user.Email,
-        Birthday: user.Birthday
+        Username: this.state.Username,
+        Password: this.state.Password,
+        Email: this.state.Email,
+        Birthday: this.state.Birthday
       }, {
         headers: { Authorization: `Bearer ${token}` }
       }, console.log(this.state))
       .then(response => {
         const data = response.data;
-        console.log(data);
+        console.log('this.state after response: ', this.state)
+        console.log('reponse data: ', data);
         this.setState({
           Username: data.Username,
           Password: data.Password,
@@ -95,7 +96,7 @@ export class ProfileView extends React.Component {
         });
         console.log(this.state);
 
-        localStorage.setItem('user', data.Username);
+        localStorage.setItem('user', this.state.Username);
         alert('Profile updated')
         window.location.reload();
       })
@@ -146,7 +147,7 @@ export class ProfileView extends React.Component {
         alert('Your account has been deleted.');
         localStorage.removeItem('user');
         localStorage.removeItem('token');
-        // window.location.pathname = '/';
+        window.location.pathname = '/';
       })
       .catch(err => {
         console.log(err);
@@ -177,92 +178,117 @@ export class ProfileView extends React.Component {
     if (user === null) return 'Loading';
 
     return (
-      <div>
-      <Row>
-        <Col xs={12} sm={4}>
-          <Card>
-            <Card.Body>
-              <h4>Your Info</h4>
-              <div className="user-username">
+      <div className="profile-view">
+        <Row className="justify-content-md-center mb-5">
+          <Col md={8} lg={12}>
+            <div className="profile-page mb-4">Your Profile</div>
+          </Col>
+
+          <div className="w-100" />
+
+          <Col sm={10} md={8} lg={6}>
+            <Card className="info-card mb-4">
+              <Card.Header  className="info-card-hf text-center" as="h4">
+                Your Info
+              </Card.Header>
+              <Card.Body className="info-card-b">
+              <div className="user-username mb-2 mb-md-3">
                 <span className="label">Username: </span>
                 <span className="value">{Username}</span>
               </div>
-              <div className="user-email">
+              <div className="user-email mb-2 mb-md-3">
                 <span className="label">Email: </span>
                 <span className="value">{Email}</span>
               </div>
-              <div className="user-birthday">
+              <div className="user-birthday mb-2 mb-md-3">
                 <span className="label">Birthday: </span>
                 <span className="value">{Birthday}</span>
               </div>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col xs={12} sm={8}>
-          <Card>
-            <Card.Header className="text-center" as="h4">
-              Edit Profile
-            </Card.Header>
+              </Card.Body>
+            </Card>
+          </Col>
 
-            <Card.Body>
-              <Form className="profile-form" onSubmit={e => this.updateUser(e)}>
-                <Form.Group className="mb-3" controlId="formUsername">
-                  <Form.Label>Username:</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="Username"
-                    onChange={e => this.setUsername(e.target.value)}
-                    placeholder="Enter a new username"
-                  />
-                </Form.Group>
+          <Col sm={10} md={8} lg={6}>
+            <Card className="update-card mb-5">
+              <Card.Header className="update-card-hf text-center" as="h4">
+                Edit Profile
+              </Card.Header>
 
-                <Form.Group className="mb-3" controlId="formPassword">
-                  <Form.Label>Password:</Form.Label>
-                  <Form.Control
-                    type="password"
-                    name="Password"
-                    onChange={e => this.setPassword(e.target.value)}
-                    placeholder="Your password must be 8 or more characters"
-                  />
-                </Form.Group>
+              <Card.Body className="update-card-b">
+                <Form className="update-form" onSubmit={e => this.updateUser(e)}>
+                  <Form.Group className="update-form mb-3" controlId="formUsername">
+                    <Form.Label className="update-form-label">Username:</Form.Label>
+                    <Form.Control className="update-form-input shadow-none"
+                      type="text"
+                      name="Username"
+                      onChange={e => this.setUsername(e.target.value)}
+                      placeholder="Enter a new username"
+                    />
+                  </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formEmail">
-                  <Form.Label>Email:</Form.Label>
-                  <Form.Control
-                    type="email"
-                    name="Email"
-                    onChange={e => this.setEmail(e.target.value)}
-                    placeholder="Enter a new email adress"
-                  />
-                </Form.Group>
+                  <Form.Group className="update-form mb-3" controlId="formPassword">
+                    <Form.Label className="update-form-label">Password:</Form.Label>
+                    <Form.Control className="update-form-input shadow-none"
+                      type="password"
+                      name="Password"
+                      onChange={e => this.setPassword(e.target.value)}
+                      placeholder="Your password must be 8 or more characters"
+                    />
+                  </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBirthday">
-                  <Form.Label>Birthday:</Form.Label>
-                  <Form.Control
-                    type="date"
-                    name="Birthday"
-                    onChange={e => this.setBirthday(e.target.value)}
-                  />
-                </Form.Group>
+                  <Form.Group className="update-form mb-3" controlId="formEmail">
+                    <Form.Label className="update-form-label">Email:</Form.Label>
+                    <Form.Control className="update-form-input shadow-none"
+                      type="email"
+                      name="Email"
+                      onChange={e => this.setEmail(e.target.value)}
+                      placeholder="Enter a new email adress"
+                    />
+                  </Form.Group>
 
-                <Button type="submit" onClick={() => this.updateUser()}>Update</Button>
-                <Button className="m-2" type="submit" onClick={() => this.deleteUser()}>Delete Account</Button>
-              </Form>
-            </Card.Body>
-          </Card>
-          <Button onClick={() => { onBackClick(); }}>Back</Button>
-        </Col>
-      </Row>
+                  <Form.Group className="update-form mb-3" controlId="formBirthday">
+                    <Form.Label className="update-form-label">Birthday:</Form.Label>
+                    <Form.Control className="update-form-input shadow-none"
+                      type="date"
+                      name="Birthday"
+                      onChange={e => this.setBirthday(e.target.value)}
+                    />
+                  </Form.Group>
 
-      <Row>
-        <h3>Favorite Movies</h3>
+                  <Button className="button-primary" type="submit" onClick={() => this.updateUser()}>Update</Button>
+                  <Button className="button-secondary m-2" type="submit" onClick={() => this.deleteUser()}>Delete Account</Button>
+                </Form>
+              </Card.Body>
+            </Card>
+
+            <Button className="button-primary" onClick={() => { onBackClick(); }}>Back</Button>
+          </Col>
+        </Row>
+
+        <Row className="justify-content-md-center">
+          <Col md={8} lg={12}>
+            <div className="favorite-movies mb-4">Favorite Movies:</div>
+          </Col>
+
+          <div className="w-100" />
+
           { FavoriteMovies && FavoriteMovies.map(movie => (
-            <Col key={FavoriteMovies._id}>
-              {/* {console.log(FavoriteMovies._id)} */}
-              <MovieCard movie={{movie}} />
+            <Col className="movie-card-container d-flex align-items-stretch mb-4 mb-md-5" sm={6} md={5} lg={4} key={movie._id}>
+              <Card className="movie-card mb-4" movie={movie}>
+                <Card.Img variant="top" src={movie.ImagePath} />
+                <Card.Body>
+                  <Card.Title>{movie.Title}</Card.Title>
+                  <Card.Text className="muted-text">{movie.ReleaseYear}</Card.Text>
+                  <Link to={`/movies/${movie._id}`}>
+                    <Button className="button-primary shadow-none">More</Button>
+                  </Link>
+                  <div className="w-100" />
+                  <Button className="button-secondary remove-favorite mt-4" value={movie._id} onClick={() => this.removeFavorite(movie)}>Remove Favorite</Button>
+                </Card.Body>
+              </Card>
             </Col>
           ))}
-      </Row>
+        </Row>
       </div>
     );
   }
