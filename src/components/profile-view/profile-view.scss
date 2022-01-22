@@ -1,27 +1,61 @@
+$background: #1C1B1B;
+$primary: #DF611C;
+$secondary: #00918C;
+
+.profile-page,
 .favorite-movies {
-  margin-bottom: 15px;
-  figure {
-    position: relative;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin: auto;
-    width: 100%;
-    img {
-      display: block;
-      height: 400px;
-      margin: auto;
-    }
-    figcaption {
-      text-align: center;
+  font-size: 2.25rem !important;
+  color: lighten($primary, 7%) !important;
+}
+
+.update-card,
+.info-card {
+  border: none !important;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+  .update-card-b,
+  .update-form,
+  .update-form-label,
+  .info-card-b,
+  .user-username,
+  .user-email,
+  .user-birthday,
+  .label,
+  .value {
+    background-color: lighten($background, 8%);
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    .update-form-input {
+      background-color: rgba(255, 255, 255, 0.9);
+      &:focus {
+        border: 2px solid lighten($primary, 7%);
+      }
     }
   }
-  button.btn {
-    display: block;
-    margin: auto;
+  .value {
+    color: lighten($secondary, 7%);
+  }
+  .update-card-hf,
+  .info-card-hf {
+    background-color: lighten($background, 4%) !important;    
+    .card-text {
+      background-color: lighten($background, 4%);
+    }
+    .button-secondary {
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6) !important;
+      &:hover,
+      &:focus,
+      &:active {
+        box-shadow: none !important;
+      }
+    }
   }
 }
 
-.card {
-  margin-bottom: 15px;
+.button-primary {
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6) !important;
+  &:hover,
+  &:focus,
+  &:active {
+    box-shadow: none !important;
+  }
 }
