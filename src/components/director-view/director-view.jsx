@@ -1,38 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { Col, Button } from 'react-bootstrap';
+// import { Link } from 'react-router-dom';
+import { Row, Col, Button } from 'react-bootstrap';
+
+import { MovieCard } from '../movie-card/movie-card';
+
+import './director-view.scss';
 
 export class DirectorView extends React.Component {
   render() {
     const { director, onBackClick } = this.props;
 
     return (
-      <Col md={8} lg={4}>
-        <div className="director-view">
-          <div className="director-name">
-            <span className="value">{director.Name}</span>
-          </div>
+      <div className="director-view">
+        <Row className="justify-content-center">
+          <Col sm={10} md={8}>
+            <div className="director-name mb-4">{director.Name}</div>
+            <div className="director-bio mb-3">{director.Bio}</div>
+            <div className="director-birthyear mb-2 mb-md-3">Birthyear: {director.BirthYear}</div>
+          </Col>
+        </Row>
 
-          <div className="director-bio">
-            <span className="value">{director.Bio}</span>
-          </div>
+        <Row className="justify-content-center">
+          <Col className="mb-3 mb-md-4" sm={10} md={8}>
+            <div className="director-movies">Movies:</div>
+          </Col>
 
-          <div className="director-birthyear">
-            <span className="value">{director.BirthYear}</span>
-          </div>
+          <div className="w-100" />
 
-          <div className="director-movies">
-            <span className="label">Movies: </span>
-            { director.Movies.map((movie) => (
-              <Link key={movie._id} to={`/movies/${movie._id}`}>{movie.Title}</Link> ))
-              .reduce((prev, curr) => [ prev, ", ", curr ])
-            }
-         </div>
+          { director.Movies.map(movie => (
+            <Col className="movie-card-container d-flex align-items-stretch mb-4 mb-md-5" sm={6} md={5} lg={4} key={movie._id}>
+              <MovieCard movie={movie} />
+            </Col>
+          ))}
 
-          <Button variant="primary" onClick={() => { onBackClick(); }}>Back</Button>
-        </div>
-      </Col>
+          <div className="w-100" />
+
+          <Col sm={10} md={8}>
+            <Button className="button-primary" onClick={() => { onBackClick(); }}>Back</Button>
+          </Col>
+        </Row>
+      </div>
     );
   }
 }
