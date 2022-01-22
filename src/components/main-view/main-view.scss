@@ -1,4 +1,6 @@
 .main-view {
   max-width: 1400px;
+  min-height: calc(100vh - 75px);
   margin: 0 auto !important;
+  align-content: flex-start;
 }
