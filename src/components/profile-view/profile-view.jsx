@@ -277,7 +277,7 @@ export class ProfileView extends React.Component {
               <Card className="movie-card mb-4" movie={movie}>
                 <Card.Img variant="top" src={movie.ImagePath} />
                 <Card.Body>
-                  <Card.Title>{movie.Title}</Card.Title>
+                  <Card.Title className="text-truncate">{movie.Title}</Card.Title>
                   <Card.Text className="muted-text">{movie.ReleaseYear}</Card.Text>
                   <Link to={`/movies/${movie._id}`}>
                     <Button className="button-primary shadow-none">More</Button>
