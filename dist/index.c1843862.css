@@ -51,7 +51,7 @@
   border-bottom-left-radius: 3px;
 }
 .movie-card-container .movie-card .card-title {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: #e67639;
 }
 .movie-card-container .movie-card .button-primary {
@@ -271,7 +271,7 @@ img {
 }
 .navbar .nav-link {
   color: #F5F5F5 !important;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
 }
 .navbar .nav-link:hover, .navbar .nav-link:focus {
   color: rgba(255, 255, 255, 0.6) !important;
@@ -289,6 +289,52 @@ img {
   min-height: calc(100vh - 75px);
   margin: 0 auto !important;
   align-content: flex-start;
+}
+.main-view .page-title {
+  font-size: 2.25rem;
+  color: #e67639;
+}
+.genre-card {
+  border: none !important;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+}
+.genre-card .card-body,
+.genre-card .card-title,
+.genre-card .card-text {
+  background-color: #262525;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.genre-card .card-title {
+  font-size: 1.75rem;
+}
+.director-card {
+  border: none !important;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+}
+.director-card .card-body,
+.director-card .card-title,
+.director-card .card-text {
+  background-color: #262525;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.director-card .card-title {
+  font-size: 1.75rem;
+}
+.actor-card {
+  border: none !important;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+}
+.actor-card .card-body,
+.actor-card .card-title,
+.actor-card .card-text {
+  background-color: #262525;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.actor-card .card-title {
+  font-size: 1.75rem;
 }
 * {
   background-color: #1C1B1B;
