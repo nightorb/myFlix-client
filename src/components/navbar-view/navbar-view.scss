@@ -1,22 +1,48 @@
 $primary: #DF611C;
+$text: #F5F5F5;
 
 .navbar {
   background-color: darken($primary, 10%);
-  height: 75px;
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.6);
   .navbar-brand {
-    color: whitesmoke !important;
-    font-size: 1.75rem;
+    color: $text !important;
+    font-size: 2rem;
+    margin-right: 4rem;
   }
-  .navbar-nav {
-    background-color: darken($primary, 10%);
-    .nav-link {
-      color: whitesmoke !important;
-      font-size: 1.15rem;
+  .container,
+  .navbar-nav,
+  .navbar-brand,
+  .navbar-collapse,
+  .navbar-dropdown {
+    background-color: darken($primary, 10%) !important;
+  }
+  .navbar-dropdown {
+    cursor: pointer;
+  }
+  .dropdown {
+    margin-right: 1rem;
+  }
+  .dropdown-menu {
+    background-color: darken($primary, 15%) !important;
+    border: none;
+    .dropdown-item {
+      color: $text !important;
       &:hover,
       &:focus {
-        color:rgba(255, 255, 255, 0.5) !important;
+        background-color: $primary;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2) !important
       }
+    }
+    .dropdown-divider {
+      border-top: 3px solid lighten($primary, 15%);
+    }
+  }
+  .nav-link {
+    color: $text !important;
+    font-size: 1.15rem;
+    &:hover,
+    &:focus {
+      color:rgba(255, 255, 255, 0.6) !important;
     }
   }
   button {
