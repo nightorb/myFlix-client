@@ -12,9 +12,9 @@ import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
 import { ActorView } from '../actor-view/actor-view';
 import { ProfileView } from '../profile-view/profile-view';
-import { AllGenres } from '../all-genres/all-genres';
-import { AllDirectors } from '../all-directors/all-directors';
-import { AllActors } from '../all-actors/all-actors';
+import { GenresPage } from '../genres-page/genres-page';
+import { DirectorsPage } from '../directors-page/directors-page';
+import { ActorsPage } from '../actors-page/actors-page';
 
 import './main-view.scss';
 
@@ -137,6 +137,18 @@ class MainView extends React.Component {
 
             if (movies.length === 0) return <div className="main-view" />;
 
+            return (
+              <Row className="d-block w-100">
+                <h1 className="page-title text-center mb-5">Movies</h1>
+              </Row>
+            )
+          }} />
+
+          <Route exact path="/" render={() => {
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+
+            if (movies.length === 0) return <div className="main-view" />;
+
             return movies.map(m => (
               <Col className="movie-card-container d-flex align-items-stretch" sm={6} md={4} xl={3} key={m._id}>
                 <MovieCard movie={m} />
@@ -165,9 +177,21 @@ class MainView extends React.Component {
 
             if (movies.length === 0) return <div className="main-view" />;
 
+            return (
+              <Row className="d-block w-100">
+                <h1 className="page-title text-center mb-5">Genres</h1>
+              </Row>
+            )
+          }} />
+
+          <Route exact path="/genres" render={() => {
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+
+            if (movies.length === 0) return <div className="main-view" />;
+
             return genres.map(g => (
-              <Col className="all-genres" sm={10} key={g._id}>
-                <AllGenres genre={g} />
+              <Col className="genres-page" xs={12} lg={8} key={g._id}>
+                <GenresPage genre={g} />
               </Col>
             ))
           }} />
@@ -187,9 +211,21 @@ class MainView extends React.Component {
 
             if (movies.length === 0) return <div className="main-view" />;
 
+            return (
+              <Row className="d-block w-100">
+                <h1 className="page-title text-center mb-5">Directors</h1>
+              </Row>
+            )
+          }} />
+
+          <Route exact path="/directors" render={() => {
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+
+            if (movies.length === 0) return <div className="main-view" />;
+
             return directors.map(d => (
-              <Col className="all-genres" sm={10} key={d._id}>
-                <AllDirectors director={d} />
+              <Col className="directors-page" xs={12} lg={8} key={d._id}>
+                <DirectorsPage director={d} />
               </Col>
             ))
           }} />
@@ -209,9 +245,21 @@ class MainView extends React.Component {
 
             if (movies.length === 0) return <div className="main-view" />;
 
+            return (
+              <Row className="d-block w-100">
+                <h1 className="page-title text-center mb-5">Actors</h1>
+              </Row>
+            )
+          }} />
+
+          <Route exact path="/actors" render={() => {
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+
+            if (movies.length === 0) return <div className="main-view" />;
+
             return actors.map(a => (
-              <Col className="all-genres" sm={10} key={a._id}>
-                <AllActors actor={a} />
+              <Col className="actors-page" xs={12} lg={8} key={a._id}>
+                <ActorsPage actor={a} />
               </Col>
             ))
           }} />
