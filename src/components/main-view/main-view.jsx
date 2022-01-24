@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Spinner } from 'react-bootstrap';
 
 import { NavbarView } from '../navbar-view/navbar-view.jsx';
 import { LoginView } from '../login-view/login-view';
@@ -133,9 +133,7 @@ class MainView extends React.Component {
 
         <Row className="main-view justify-content-center py-5 px-5">
           <Route exact path="/" render={() => {
-            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-
-            if (movies.length === 0) return <div className="main-view" />;
+            if (movies.length === 0) return <div />;
 
             return (
               <Row className="d-block w-100">
@@ -147,7 +145,7 @@ class MainView extends React.Component {
           <Route exact path="/" render={() => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
 
-            if (movies.length === 0) return <div className="main-view" />;
+            if (movies.length === 0) return <Spinner animation="border" />;
 
             return movies.map(m => (
               <Col className="movie-card-container d-flex align-items-stretch" sm={6} md={4} xl={3} key={m._id}>
@@ -165,7 +163,7 @@ class MainView extends React.Component {
           <Route path="/movies/:movieId" render={({ match, history }) => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
 
-            if (movies.length === 0) return <div className="main-view" />;
+            if (movies.length === 0) return <Spinner animation="border" />;
 
             return <Col lg={10}>
               <MovieView movie={movies.find(m => m._id === match.params.movieId)} onBackClick={() => history.goBack()} />
@@ -173,9 +171,7 @@ class MainView extends React.Component {
           }} />
 
           <Route exact path="/genres" render={() => {
-            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-
-            if (movies.length === 0) return <div className="main-view" />;
+            if (movies.length === 0) return <div />;
 
             return (
               <Row className="d-block w-100">
@@ -187,7 +183,7 @@ class MainView extends React.Component {
           <Route exact path="/genres" render={() => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
 
-            if (movies.length === 0) return <div className="main-view" />;
+            if (movies.length === 0) return <Spinner animation="border" />;
 
             return genres.map(g => (
               <Col className="genres-page" xs={12} lg={8} key={g._id}>
@@ -199,7 +195,7 @@ class MainView extends React.Component {
           <Route path="/genres/:name" render={({ match, history }) => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
 
-            if (movies.length === 0) return <div className="main-view" />;
+            if (movies.length === 0) return <Spinner animation="border" />;
 
             return (
               <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} onBackClick={() => history.goBack()} />
@@ -207,9 +203,7 @@ class MainView extends React.Component {
           }} />
 
           <Route exact path="/directors" render={() => {
-            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-
-            if (movies.length === 0) return <div className="main-view" />;
+            if (movies.length === 0) return <div />;
 
             return (
               <Row className="d-block w-100">
@@ -221,7 +215,7 @@ class MainView extends React.Component {
           <Route exact path="/directors" render={() => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
 
-            if (movies.length === 0) return <div className="main-view" />;
+            if (movies.length === 0) return <Spinner animation="border" />;
 
             return directors.map(d => (
               <Col className="directors-page" xs={12} lg={8} key={d._id}>
@@ -233,7 +227,7 @@ class MainView extends React.Component {
           <Route path="/directors/:name" render={({ match, history }) => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
 
-            if (movies.length === 0) return <div className="main-view" />;
+            if (movies.length === 0) return <Spinner animation="border" />;
 
             return (
               <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} onBackClick={() => history.goBack()} />
@@ -241,9 +235,7 @@ class MainView extends React.Component {
           }} />
 
           <Route exact path="/actors" render={() => {
-            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-
-            if (movies.length === 0) return <div className="main-view" />;
+            if (movies.length === 0) return <div />;
 
             return (
               <Row className="d-block w-100">
@@ -255,7 +247,7 @@ class MainView extends React.Component {
           <Route exact path="/actors" render={() => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
 
-            if (movies.length === 0) return <div className="main-view" />;
+            if (movies.length === 0) return <Spinner animation="border" />;
 
             return actors.map(a => (
               <Col className="actors-page" xs={12} lg={8} key={a._id}>
@@ -267,7 +259,7 @@ class MainView extends React.Component {
           <Route path="/actors/:name" render={({ match, history }) => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
 
-            if (movies.length === 0) return <div className="main-view" />;
+            if (movies.length === 0) return <Spinner animation="border" />;
 
             return (
               <ActorView actor={movies.find(m => m.Actors.Name === match.params.name).Actors} onBackClick={() => history.goBack()} />
@@ -279,9 +271,9 @@ class MainView extends React.Component {
 
             if (movies.length === 0) return <div className="main-view" />;
 
-            return (
+            return <Col xs={12}>
               <ProfileView getUser={() => this.getUser() } onBackClick={() => history.goBack()} />
-            )
+            </Col>
           }} />
         </Row>
       </Router>
