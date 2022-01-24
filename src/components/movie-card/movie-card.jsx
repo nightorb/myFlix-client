@@ -7,7 +7,7 @@ import './movie-card.scss';
 
 export class MovieCard extends React.Component {
   render() {
-    const { movie } = this.props;
+    const { movie, role } = this.props;
 
     return(
       <Card className="movie-card mb-4">
@@ -15,6 +15,7 @@ export class MovieCard extends React.Component {
         <Card.Body>
           <Card.Title className="text-truncate">{movie.Title}</Card.Title>
           <Card.Text className="muted-text">{movie.ReleaseYear}</Card.Text>
+          <Card.Text>{role}</Card.Text>
           <Link to={`/movies/${movie._id}`}>
             <Button className="button-primary shadow-none">More</Button>
           </Link>
@@ -30,5 +31,6 @@ MovieCard.propTypes = {
     Title: PropTypes.string.isRequired,
     ImagePath: PropTypes.string.isRequired,
     ReleaseYear: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  role: PropTypes.string
 };
