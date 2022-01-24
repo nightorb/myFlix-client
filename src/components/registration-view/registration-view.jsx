@@ -29,7 +29,7 @@ export function RegistrationView() {
   }
 
   return (
-    <Col className="registration-view" xs={9} md={6} xl={4}>
+    <Col className="registration-view" sm={10} md={8} lg={6} xl={5}>
       <Card className="registration-card">
         <Card.Header className="registration-card-hf text-center" as="h4">
           Create a free account
