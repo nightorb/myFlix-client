@@ -168,7 +168,21 @@ img {
 }
 .director-name {
   font-size: 2.25rem !important;
-  color: #e67639 !important;
+  color: #e67639;
+}
+
+.director-movies {
+  font-size: 1.75rem;
+  color: #e67639;
+}
+.actor-name {
+  font-size: 2.25rem !important;
+  color: #e67639;
+}
+
+.actor-movies {
+  font-size: 1.75rem;
+  color: #e67639;
 }
 .profile-page,
 .favorite-movies {
@@ -200,8 +214,6 @@ img {
 .info-card .label,
 .info-card .value {
   background-color: #312f2f;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
 }
 .update-card .update-card-b .update-form-input,
 .update-card .update-form .update-form-input,
@@ -242,6 +254,11 @@ img {
 .info-card .label .update-form-input:focus,
 .info-card .value .update-form-input:focus {
   border: 2px solid #e67639;
+}
+.update-card .info-card-b,
+.info-card .info-card-b {
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
 }
 .update-card .value,
 .info-card .value {
@@ -382,9 +399,5 @@ button:hover, button:focus, button:active {
 .button-secondary:hover, .button-secondary:focus, .button-secondary:active {
   background-color: #006d6a !important;
   color: whitesmoke !important;
-}
-
-.spinner-border {
-  border-color: #DF611C;
 }
 /*# sourceMappingURL=index.c1843862.css.map */
