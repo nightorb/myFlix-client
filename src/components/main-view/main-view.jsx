@@ -84,6 +84,7 @@ class MainView extends React.Component {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
+      console.log('getDirectors response ', response.data);
       this.setState({
         directors: response.data
       });
@@ -135,11 +136,9 @@ class MainView extends React.Component {
           <Route exact path="/" render={() => {
             if (movies.length === 0) return <div />;
 
-            return (
-              <Row className="d-block w-100">
-                <h1 className="page-title text-center mb-5">Movies</h1>
-              </Row>
-            )
+            return <Row className="d-block w-100">
+              <h1 className="page-title text-center mb-5">Movies</h1>
+            </Row>
           }} />
 
           <Route exact path="/" render={() => {
@@ -173,11 +172,9 @@ class MainView extends React.Component {
           <Route exact path="/genres" render={() => {
             if (movies.length === 0) return <div />;
 
-            return (
-              <Row className="d-block w-100">
-                <h1 className="page-title text-center mb-5">Genres</h1>
-              </Row>
-            )
+            return <Row className="d-block w-100">
+              <h1 className="page-title text-center mb-5">Genres</h1>
+            </Row>
           }} />
 
           <Route exact path="/genres" render={() => {
@@ -205,11 +202,9 @@ class MainView extends React.Component {
           <Route exact path="/directors" render={() => {
             if (movies.length === 0) return <div />;
 
-            return (
-              <Row className="d-block w-100">
-                <h1 className="page-title text-center mb-5">Directors</h1>
-              </Row>
-            )
+            return <Row className="d-block w-100">
+              <h1 className="page-title text-center mb-5">Directors</h1>
+            </Row>
           }} />
 
           <Route exact path="/directors" render={() => {
@@ -227,21 +222,19 @@ class MainView extends React.Component {
           <Route path="/directors/:name" render={({ match, history }) => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
 
-            if (movies.length === 0) return <Spinner animation="border" />;
+            if (directors.length === 0) return <Spinner animation="border" />;
 
-            return (
-              <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} onBackClick={() => history.goBack()} />
-            )
+            return <Col>
+              <DirectorView director={directors.find(d => d.Name === match.params.name)} onBackClick={() => history.goBack()} />
+            </Col>
           }} />
 
           <Route exact path="/actors" render={() => {
             if (movies.length === 0) return <div />;
 
-            return (
-              <Row className="d-block w-100">
-                <h1 className="page-title text-center mb-5">Actors</h1>
-              </Row>
-            )
+            return <Row className="d-block w-100">
+              <h1 className="page-title text-center mb-5">Actors</h1>
+            </Row>
           }} />
 
           <Route exact path="/actors" render={() => {
@@ -259,11 +252,11 @@ class MainView extends React.Component {
           <Route path="/actors/:name" render={({ match, history }) => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
 
-            if (movies.length === 0) return <Spinner animation="border" />;
+            if (actors.length === 0) return <Spinner animation="border" />;
 
-            return (
-              <ActorView actor={movies.find(m => m.Actors.Name === match.params.name).Actors} onBackClick={() => history.goBack()} />
-            )
+            return <Col>
+              <ActorView actor={actors.find(a => a.Name === match.params.name)} onBackClick={() => history.goBack()} />
+            </Col>
           }} />
 
           <Route path={`/users/${user}`} render={({ history }) => {
