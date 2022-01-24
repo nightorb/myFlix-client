@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import { Row, Col, Form, Button, Card } from 'react-bootstrap';
 
@@ -22,7 +23,6 @@ export class ProfileView extends React.Component {
   componentDidMount() {
     this.getUser();
     this.getFavoriteMovies();
-    console.log('this.state inside componentDidMount: ', this.state);
   }
 
   getUser() {
@@ -34,8 +34,6 @@ export class ProfileView extends React.Component {
     })
     .then(response => {
       const data = response.data;
-      console.log('response data: ', response.data);
-      // console.log(this.state);
 
       this.setState({
         Username: data.Username,
@@ -43,8 +41,6 @@ export class ProfileView extends React.Component {
         Email: data.Email,
         Birthday: data.Birthday,
       });
-      console.log('reponse data favorite movies from getUser()', data.FavoriteMovies);
-      // console.log(this.state);
     })
     .catch(err => {
       console.log(err);
@@ -59,19 +55,17 @@ export class ProfileView extends React.Component {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
-      // console.log(response.data);
       this.setState({
         FavoriteMovies: response.data.FavoriteMovies
       });
-      console.log('reponse data favorite movies from getFavoriteMovies(): ', response.data.FavoriteMovies);
-      console.log('this.state favorite movies from getFavoriteMovies(): ', this.state);
     })
     .catch(err => {
       console.log(err);
     })
   }
 
-  updateUser() {
+  updateUser(e) {
+    e.preventDefault();
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
 
@@ -83,22 +77,20 @@ export class ProfileView extends React.Component {
         Birthday: this.state.Birthday
       }, {
         headers: { Authorization: `Bearer ${token}` }
-      }, console.log(this.state))
+      })
       .then(response => {
         const data = response.data;
-        console.log('this.state after response: ', this.state)
-        console.log('reponse data: ', data);
+
         this.setState({
-          Username: data.Username,
+          Username: data.Username || null,
           Password: data.Password,
           Email: data.Email,
           Birthday: data.Birthday
         });
-        console.log(this.state);
 
         localStorage.setItem('user', this.state.Username);
-        alert('Profile updated')
-        window.location.reload();
+        alert('Profile updated');
+        window.location.pathname = `/users/${this.state.Username}`;
       })
       .catch(err => {
         console.log(err);
@@ -202,7 +194,7 @@ export class ProfileView extends React.Component {
               </div>
               <div className="user-birthday mb-2 mb-md-3">
                 <span className="label">Birthday: </span>
-                <span className="value">{Birthday}</span>
+                <span className="value">{dayjs(Birthday).format('YYYY-MM-DD')}</span>
               </div>
               </Card.Body>
             </Card>
@@ -255,8 +247,8 @@ export class ProfileView extends React.Component {
                     />
                   </Form.Group>
 
-                  <Button className="button-primary" type="submit" onClick={() => this.updateUser()}>Update</Button>
-                  <Button className="button-secondary m-2" type="submit" onClick={() => this.deleteUser()}>Delete Account</Button>
+                  <Button className="button-primary m-1" type="submit">Update</Button>
+                  <Button className="button-secondary m-1 m-sm-3" type="submit" onClick={() => this.deleteUser()}>Delete Account</Button>
                 </Form>
               </Card.Body>
             </Card>
