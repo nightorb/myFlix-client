@@ -14,15 +14,15 @@ export class DirectorView extends React.Component {
     return (
       <div className="director-view">
         <Row className="justify-content-center">
-          <Col sm={10} md={8}>
+          <Col md={10} lg={8}>
             <div className="director-name mb-4">{director.Name}</div>
             <div className="director-bio mb-3">{director.Bio}</div>
-            <div className="director-birthyear mb-2 mb-md-3">Birthyear: {director.BirthYear}</div>
+            <div className="director-birthyear mb-4">Birthyear: {director.BirthYear}</div>
           </Col>
         </Row>
 
         <Row className="justify-content-center">
-          <Col className="mb-3 mb-md-4" sm={10} md={8}>
+          <Col className="mb-3 mb-md-4" md={10} lg={8}>
             <div className="director-movies">Movies:</div>
           </Col>
 
@@ -36,7 +36,7 @@ export class DirectorView extends React.Component {
 
           <div className="w-100" />
 
-          <Col sm={10} md={8}>
+          <Col md={10} lg={8}>
             <Button className="button-primary" onClick={() => { onBackClick(); }}>Back</Button>
           </Col>
         </Row>
@@ -52,10 +52,7 @@ DirectorView.propTypes = {
     BirthYear: PropTypes.string.isRequired,
     Movies: PropTypes.arrayOf(
       PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        Title: PropTypes.string.isRequired,
-        ImagePath: PropTypes.string.isRequired,
-        ReleaseYear: PropTypes.string.isRequired
+        Movie: MovieCard.propTypes.isRequired
       })
     )
   }).isRequired,
