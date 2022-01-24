@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { Col, Button } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
+
+import { MovieCard } from '../movie-card/movie-card';
+
+import './actor-view.scss';
 
 export class ActorView extends React.Component {
 
@@ -9,25 +12,34 @@ export class ActorView extends React.Component {
     const { actor, onBackClick } = this.props;
 
     return (
-      <Col md={8} lg={4}>
-        <div className="actor-view">
-          <div className="actor-name">
-            <span className="value">{actor.Name}</span>
-          </div>
-          <div className="actor-birthyear">
-            <span className="value">{actor.BirthYear}</span>
-          </div>
-          <div className="actor-movies">
-            <span className="label">Movies: </span>
-            { actor.Movies.map((movie) => (
-              <Link key={movie._id} to={`/movies/${movie._id}`}>{movie.Title}</Link> ))
-              .reduce((prev, curr) => [ prev, ", ", curr ])
-            }
-         </div>
+      <div className="actor-view">
+        <Row className="justify-content-center">
+          <Col md={10} lg={8}>
+            <div className="actor-name mb-4">{actor.Name}</div>
+            <div className="actor-birthyear mb-4">Birthyear: {actor.BirthYear}</div>
+          </Col>
+        </Row>
 
-          <Button variant="primary" onClick={() => { onBackClick(); }}>Back</Button>
-        </div>
-      </Col>
+        <Row className="justify-content-center">
+          <Col className="mb-3 mb-md-4" md={10} lg={8}>
+            <div className="actor-movies">Movies:</div>
+          </Col>
+
+          <div className="w-100" />
+
+            { actor.Movies.map(movie => (
+              <Col className="movie-card-container d-flex align-items-stretch mb-4 mb-md-5" sm={6} md={5} lg={4} key={movie._id}>
+                <MovieCard movie={movie.Movie} role={movie.Role} />
+              </Col>
+            ))}
+
+          <div className="w-100" />
+
+          <Col md={10} lg={8}>
+            <Button className="button-primary" onClick={() => { onBackClick(); }}>Back</Button>
+          </Col>
+        </Row>
+      </div>
     );
   }
 }
@@ -38,9 +50,8 @@ ActorView.propTypes = {
     BirthYear: PropTypes.string.isRequired,
     Movies: PropTypes.arrayOf(
       PropTypes.shape({
-        Title: PropTypes.string.isRequired,
-        ImagePath: PropTypes.string.isRequired,
-        ReleaseYear: PropTypes.string.isRequired
+        Movie: MovieCard.propTypes.movie,
+        Role: PropTypes.string.isRequired
       })
     )
   }).isRequired,
