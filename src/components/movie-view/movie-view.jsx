@@ -80,22 +80,10 @@ MovieView.propTypes = {
     Description: PropTypes.string.isRequired,
     ImagePath: PropTypes.string.isRequired,
     ReleaseYear: PropTypes.string.isRequired,
-    Genre: PropTypes.shape({
-      Name: PropTypes.string.isRequired,
-      Description: PropTypes.string.isRequired
-    }),
-    Director: PropTypes.shape({
-      Name: PropTypes.string.isRequired,
-      Bio: PropTypes.string.isRequired,
-      BirthYear: PropTypes.string.isRequired,
-      Movies: PropTypes.array.isRequired
-    }),
+    Genre: PropTypes.object.isRequired,
+    Director: PropTypes.object.isRequired,
     Actors: PropTypes.arrayOf(
-      PropTypes.shape({
-        Name: PropTypes.string.isRequired,
-        BirthYear: PropTypes.string.isRequired,
-        Movies: PropTypes.array.isRequired
-      })
+      PropTypes.object.isRequired
     ),
     Featured: PropTypes.bool.isRequired
   }).isRequired,
