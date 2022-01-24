@@ -247,10 +247,17 @@ export class ProfileView extends React.Component {
                     />
                   </Form.Group>
 
-                  <Button className="button-primary m-1" type="submit">Update</Button>
-                  <Button className="button-secondary m-1 m-sm-3" type="submit" onClick={() => this.deleteUser()}>Delete Account</Button>
+                  <Button className="button-primary" type="submit">Update</Button>
                 </Form>
               </Card.Body>
+
+              <Card.Footer className="update-card-hf text-center">
+                <Card.Text className="muted-text">
+                  Danger zone!<br/>
+                  Once you delete your account, there is no going back.
+                </Card.Text>
+                <Button className="button-secondary" type="submit" onClick={() => this.deleteUser()}>Delete Account</Button>
+              </Card.Footer>
             </Card>
 
             <Button className="button-primary" onClick={() => { onBackClick(); }}>Back</Button>
