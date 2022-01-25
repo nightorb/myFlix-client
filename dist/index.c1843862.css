@@ -33,33 +33,6 @@
 .login-card .login-card-hf .button-secondary:hover, .login-card .login-card-hf .button-secondary:focus, .login-card .login-card-hf .button-secondary:active {
   box-shadow: none !important;
 }
-.movie-card-container {
-  padding: 0;
-}
-.movie-card-container .movie-card {
-  border: none;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
-}
-.movie-card-container .movie-card img {
-  filter: brightness(0.85);
-}
-.movie-card-container .movie-card .card-body,
-.movie-card-container .movie-card .card-title,
-.movie-card-container .movie-card .card-text {
-  background-color: #262525;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
-.movie-card-container .movie-card .card-title {
-  font-size: 1.4rem;
-  color: #e67639;
-}
-.movie-card-container .movie-card .button-primary {
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6) !important;
-}
-.movie-card-container .movie-card .button-primary:hover, .movie-card-container .movie-card .button-primary:focus, .movie-card-container .movie-card .button-primary:active {
-  box-shadow: none !important;
-}
 .movie-title {
   font-size: 2.25rem !important;
   color: #e67639 !important;
@@ -162,9 +135,42 @@ img {
 .navbar button:hover, .navbar button:focus, .navbar button:active {
   background-color: #DF611C !important;
 }
+.filter-input {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.filter-input:focus {
+  border: 2px solid #e67639 !important;
+}
 .genre-name {
   font-size: 2.25rem !important;
   color: #e67639 !important;
+}
+.movie-card-container {
+  padding: 0;
+}
+.movie-card-container .movie-card {
+  border: none;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+}
+.movie-card-container .movie-card img {
+  filter: brightness(0.85);
+}
+.movie-card-container .movie-card .card-body,
+.movie-card-container .movie-card .card-title,
+.movie-card-container .movie-card .card-text {
+  background-color: #262525;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.movie-card-container .movie-card .card-title {
+  font-size: 1.4rem;
+  color: #e67639;
+}
+.movie-card-container .movie-card .button-primary {
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6) !important;
+}
+.movie-card-container .movie-card .button-primary:hover, .movie-card-container .movie-card .button-primary:focus, .movie-card-container .movie-card .button-primary:active {
+  box-shadow: none !important;
 }
 .director-name {
   font-size: 2.25rem !important;
@@ -301,6 +307,16 @@ img {
 .button-primary:hover, .button-primary:focus, .button-primary:active {
   box-shadow: none !important;
 }
+.main-view {
+  max-width: 1400px;
+  min-height: calc(100vh - 75px);
+  margin: 0 auto !important;
+  align-content: flex-start;
+}
+.main-view .page-title {
+  font-size: 2.25rem;
+  color: #e67639;
+}
 .genre-card {
   border: none !important;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
@@ -342,16 +358,6 @@ img {
 }
 .actor-card .card-title {
   font-size: 1.75rem;
-}
-.main-view {
-  max-width: 1400px;
-  min-height: calc(100vh - 75px);
-  margin: 0 auto !important;
-  align-content: flex-start;
-}
-.main-view .page-title {
-  font-size: 2.25rem;
-  color: #e67639;
 }
 * {
   background-color: #1C1B1B;
