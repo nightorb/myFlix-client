@@ -27,11 +27,11 @@ export class ActorView extends React.Component {
 
           <div className="w-100" />
 
-            { actor.Movies.map(movie => (
-              <Col className="movie-card-container d-flex align-items-stretch mb-4 mb-md-5" sm={6} md={5} lg={4} key={movie._id}>
-                <MovieCard movie={movie.Movie} role={movie.Role} />
-              </Col>
-            ))}
+          { actor.Movies.map(movie => (
+            <Col className="movie-card-container d-flex align-items-stretch mb-4 mb-md-5" sm={6} md={5} lg={4} key={movie._id}>
+              <MovieCard movie={movie.Movie} role={movie.Role} />
+            </Col>
+          ))}
 
           <div className="w-100" />
 
