@@ -1,10 +1,39 @@
-import { combinedReducers } from 'redux';
-import { SET_MOVIES, SET_FILTER } from '../actions/actions';
+import { combineReducers } from 'redux';
+import { SET_MOVIES, SET_GENRES, SET_DIRECTORS, SET_ACTORS, SET_FILTER, SET_USER, UPDATE_USER } from '../actions/actions';
 
 function movies(state = [], action) {
   switch(action.type) {
     case SET_MOVIES:
-      console.log('SET_MOVIES reducer reached');
+      return action.value;
+
+    default:
+      return state;
+  }
+}
+
+function genres(state = [], action) {
+  switch(action.type) {
+    case SET_GENRES:
+      return action.value;
+
+    default:
+      return state;
+  }
+}
+
+function directors(state = [], action) {
+  switch(action.type) {
+    case SET_DIRECTORS:
+      return action.value;
+
+    default:
+      return state;
+  }
+}
+
+function actors(state = [], action) {
+  switch(action.type) {
+    case SET_ACTORS:
       return action.value;
 
     default:
@@ -22,9 +51,26 @@ function visibilityFilter(state = '', action) {
   }
 }
 
-const movieApp = combinedReducers({
+function user(state = {}, action) {
+  switch(action.type) {
+    case SET_USER:
+      return action.value;
+
+    case UPDATE_USER:
+      return action.value;
+      
+    default:
+      return state;
+  }
+}
+
+const movieApp = combineReducers({
   movies,
-  visibilityFilter
+  genres,
+  directors,
+  actors,
+  visibilityFilter,
+  user
 });
 
 export default movieApp;
