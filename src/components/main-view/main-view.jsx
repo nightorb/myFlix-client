@@ -1,20 +1,24 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { Row, Col, Spinner } from 'react-bootstrap';
 
+import { setMovies, setGenres, setDirectors, setActors } from '../../actions/actions.js';
+
+import MoviesList from '../movies-list/movies-list';
+import GenresList from '../genres-list/genres-list';
+import DirectorsList from '../directors-list/directors-list';
+import ActorsList from '../actors-list/actors-list';
 import { NavbarView } from '../navbar-view/navbar-view.jsx';
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
-import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
 import { ActorView } from '../actor-view/actor-view';
-import { ProfileView } from '../profile-view/profile-view';
-import { GenresPage } from '../genres-page/genres-page';
-import { DirectorsPage } from '../directors-page/directors-page';
-import { ActorsPage } from '../actors-page/actors-page';
+import ProfileView from '../profile-view/profile-view';
 
 import './main-view.scss';
 
@@ -24,10 +28,6 @@ class MainView extends React.Component {
     super();
     // initial state is set to null
     this.state = {
-      movies: [],
-      genres: [],
-      directors: [],
-      actors: [],
       user: null
     };
   }
@@ -54,11 +54,7 @@ class MainView extends React.Component {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
-      // assign result to state
-      this.setState({
-        movies: response.data
-      });
-      // console.log(this.state.movies);
+      this.props.setMovies(response.data);
     })
     .catch(err => {
       console.log(err);
@@ -70,9 +66,7 @@ class MainView extends React.Component {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
-      this.setState({
-        genres: response.data
-      });
+      this.props.setGenres(response.data);
     })
     .catch(err => {
       console.log(err);
@@ -84,11 +78,7 @@ class MainView extends React.Component {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
-      console.log('getDirectors response ', response.data);
-      this.setState({
-        directors: response.data
-      });
-      // console.log(this.state.directors);
+      this.props.setDirectors(response.data);
     })
     .catch(err => {
       console.log(err);
@@ -100,10 +90,7 @@ class MainView extends React.Component {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
-      this.setState({
-        actors: response.data
-      });
-      // console.log(this.state.actors);
+      this.props.setActors(response.data);
     })
     .catch(err => {
       console.log(err);
@@ -112,7 +99,6 @@ class MainView extends React.Component {
 
   // when user successfully logs in, this function updates user property in state to that particular user
   onLoggedIn(authData) {
-    console.log(authData);
     this.setState({
       user: authData.user.Username
     });
@@ -126,7 +112,8 @@ class MainView extends React.Component {
   }
 
   render() {
-    const { movies, genres, directors, actors, user } = this.state;
+    const { movies, genres, directors, actors } = this.props;
+    const { user } = this.state;
 
     return (
       <Router>
@@ -134,23 +121,11 @@ class MainView extends React.Component {
 
         <Row className="main-view justify-content-center py-5 px-5">
           <Route exact path="/" render={() => {
-            if (movies.length === 0) return <div />;
-
-            return <Row className="d-block w-100">
-              <h1 className="page-title text-center mb-5">Movies</h1>
-            </Row>
-          }} />
-
-          <Route exact path="/" render={() => {
-            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
 
             if (movies.length === 0) return <Spinner animation="border" />;
 
-            return movies.map(m => (
-              <Col className="movie-card-container d-flex align-items-stretch" sm={6} md={4} xl={3} key={m._id}>
-                <MovieCard movie={m} />
-              </Col>
-            ))
+            return <MoviesList movies={movies} />;
           }} />
 
           <Route path="/register" render={() => {
@@ -160,7 +135,7 @@ class MainView extends React.Component {
           }} />
 
           <Route path="/movies/:movieId" render={({ match, history }) => {
-            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
 
             if (movies.length === 0) return <Spinner animation="border" />;
 
@@ -170,57 +145,33 @@ class MainView extends React.Component {
           }} />
 
           <Route exact path="/genres" render={() => {
-            if (movies.length === 0) return <div />;
-
-            return <Row className="d-block w-100">
-              <h1 className="page-title text-center mb-5">Genres</h1>
-            </Row>
-          }} />
-
-          <Route exact path="/genres" render={() => {
-            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
 
             if (movies.length === 0) return <Spinner animation="border" />;
 
-            return genres.map(g => (
-              <Col className="genres-page" xs={12} lg={8} key={g._id}>
-                <GenresPage genre={g} />
-              </Col>
-            ))
+            return <GenresList genres={genres} />
           }} />
 
           <Route path="/genres/:name" render={({ match, history }) => {
-            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
 
-            if (movies.length === 0) return <Spinner animation="border" />;
+            if (genres.length === 0) return <Spinner animation="border" />;
 
-            return (
-              <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} onBackClick={() => history.goBack()} />
-            )
+            return <Col md={8}>
+              <GenreView genre={genres.find(g => g.Name === match.params.name)} onBackClick={() => history.goBack()} />
+            </Col>
           }} />
 
           <Route exact path="/directors" render={() => {
-            if (movies.length === 0) return <div />;
-
-            return <Row className="d-block w-100">
-              <h1 className="page-title text-center mb-5">Directors</h1>
-            </Row>
-          }} />
-
-          <Route exact path="/directors" render={() => {
-            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
 
             if (movies.length === 0) return <Spinner animation="border" />;
 
-            return directors.map(d => (
-              <Col className="directors-page" xs={12} lg={8} key={d._id}>
-                <DirectorsPage director={d} />
-              </Col>
-            ))
+            return <DirectorsList directors={directors} />
           }} />
 
           <Route path="/directors/:name" render={({ match, history }) => {
-            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
 
             if (directors.length === 0) return <Spinner animation="border" />;
 
@@ -230,27 +181,15 @@ class MainView extends React.Component {
           }} />
 
           <Route exact path="/actors" render={() => {
-            if (movies.length === 0) return <div />;
-
-            return <Row className="d-block w-100">
-              <h1 className="page-title text-center mb-5">Actors</h1>
-            </Row>
-          }} />
-
-          <Route exact path="/actors" render={() => {
-            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
 
             if (movies.length === 0) return <Spinner animation="border" />;
 
-            return actors.map(a => (
-              <Col className="actors-page" xs={12} lg={8} key={a._id}>
-                <ActorsPage actor={a} />
-              </Col>
-            ))
+            return <ActorsList actors={actors} />
           }} />
 
           <Route path="/actors/:name" render={({ match, history }) => {
-            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
 
             if (actors.length === 0) return <Spinner animation="border" />;
 
@@ -260,7 +199,7 @@ class MainView extends React.Component {
           }} />
 
           <Route path={`/users/${user}`} render={({ history }) => {
-            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
 
             if (movies.length === 0) return <div className="main-view" />;
 
@@ -274,4 +213,13 @@ class MainView extends React.Component {
   }
 }
 
-export default MainView;
+const mapStateToProps = state => {
+  return {
+    movies: state.movies,
+    genres: state.genres,
+    directors: state.directors,
+    actors: state.actors
+  }
+}
+
+export default connect(mapStateToProps, { setMovies, setGenres, setDirectors, setActors })(MainView);
