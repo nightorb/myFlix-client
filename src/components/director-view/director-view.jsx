@@ -14,7 +14,7 @@ export class DirectorView extends React.Component {
     return (
       <div className="director-view">
         <Row className="justify-content-center">
-          <Col md={10} lg={8}>
+          <Col md={10} lg={9}>
             <div className="director-name mb-4">{director.Name}</div>
             <div className="director-bio mb-3">{director.Bio}</div>
             <div className="director-birthyear mb-4">Birthyear: {director.BirthYear}</div>
@@ -22,21 +22,21 @@ export class DirectorView extends React.Component {
         </Row>
 
         <Row className="justify-content-center">
-          <Col className="mb-3 mb-md-4" md={10} lg={8}>
+          <Col className="mb-3 mb-md-4" md={10} lg={9}>
             <div className="director-movies">Movies:</div>
           </Col>
 
           <div className="w-100" />
 
           { director.Movies.map(movie => (
-            <Col className="movie-card-container d-flex align-items-stretch mb-4 mb-md-5" sm={6} md={5} lg={4} key={movie._id}>
+            <Col className="movie-card-container d-flex align-items-stretch mb-4 mb-md-5" sm={6} md={5} lg={3} key={movie._id}>
               <MovieCard movie={movie} />
             </Col>
           ))}
 
           <div className="w-100" />
 
-          <Col md={10} lg={8}>
+          <Col md={10} lg={9}>
             <Button className="button-primary" onClick={() => { onBackClick(); }}>Back</Button>
           </Col>
         </Row>
