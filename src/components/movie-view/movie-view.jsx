@@ -9,15 +9,21 @@ import './movie-view.scss';
 export class MovieView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isFavorite: 'Add to Favorites'
+    };
   }
 
   addFavoriteMovie() {
     const token = localStorage.getItem('token'),
       user = localStorage.getItem('user');
 
+    this.setState({
+      isFavorite: 'Added to Favorites!'
+    })
+
     axios.post(`https://nightorbs-myflix.herokuapp.com/users/${user}/favorites/${this.props.movie._id}`, {}, {
-      headers: { Authorization: `Bearer ${token}` },
-      method: 'POST'
+      headers: { Authorization: `Bearer ${token}` }
     })
     .then(() => {
       alert('Movie added to your favorites');
@@ -35,7 +41,7 @@ export class MovieView extends React.Component {
         <Row className="justify-content-sm-center">
           <Col className="mb-4" sm={9} md={12}>
             <div className="movie-title mb-2">{movie.Title}</div>
-            <Button className="button-secondary" value={movie._id} onClick={() => this.addFavoriteMovie(movie)}>Add to Favorites</Button>
+            <Button className="button-secondary" value={movie._id} onClick={() => this.addFavoriteMovie()}>{this.state.isFavorite}</Button>
           </Col>
         </Row>
 
