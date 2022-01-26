@@ -51,7 +51,7 @@ function visibilityFilter(state = '', action) {
   }
 }
 
-function user(state = {}, action) {
+function user(state = [], action) {
   switch(action.type) {
     case SET_USER:
       return action.value;
