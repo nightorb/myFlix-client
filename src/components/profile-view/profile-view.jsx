@@ -2,12 +2,15 @@ import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Row, Col, Form, Button, Card } from 'react-bootstrap';
 
+import { setUser, updateUser } from '../../actions/actions';
+
 import './profile-view.scss';
 
-export class ProfileView extends React.Component {
+class ProfileView extends React.Component {
   constructor() {
     super();
 
@@ -26,8 +29,8 @@ export class ProfileView extends React.Component {
   }
 
   getUser() {
-    const user = localStorage.getItem('user');
-    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user'),
+      token = localStorage.getItem('token');
 
     axios.get(`https://nightorbs-myflix.herokuapp.com/users/${user}`, {
       headers: { Authorization: `Bearer ${token}` }
@@ -48,8 +51,8 @@ export class ProfileView extends React.Component {
   }
 
   getFavoriteMovies() {
-    const user = localStorage.getItem('user');
-    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user'),
+      token = localStorage.getItem('token');
 
     axios.get(`https://nightorbs-myflix.herokuapp.com/users/${user}/favorites`, {
       headers: { Authorization: `Bearer ${token}` }
@@ -64,10 +67,10 @@ export class ProfileView extends React.Component {
     })
   }
 
-  updateUser(e) {
+  handleUpdate(e) {
     e.preventDefault();
-    const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
+    const token = localStorage.getItem('token'),
+      user = localStorage.getItem('user');
 
     axios.put(`https://nightorbs-myflix.herokuapp.com/users/${user}`,
       {
@@ -129,8 +132,8 @@ export class ProfileView extends React.Component {
     const confirmation = window.confirm('Are you sure you want to delete your account?');
 
     if (confirmation) {
-      const token = localStorage.getItem('token');
-      const user = localStorage.getItem('user');
+      const token = localStorage.getItem('token'),
+        user = localStorage.getItem('user');
 
       axios.delete(`https://nightorbs-myflix.herokuapp.com/users/${user}`, {
         headers: { Authorization: `Bearer ${token}` }
@@ -148,8 +151,8 @@ export class ProfileView extends React.Component {
   }
 
   removeFavorite(movie) {
-    const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
+    const token = localStorage.getItem('token'),
+      user = localStorage.getItem('user');
 
     axios.delete(`https://nightorbs-myflix.herokuapp.com/users/${user}/favorites/${movie._id}`, {
       headers: { Authorization: `Bearer ${token}` }
@@ -172,13 +175,13 @@ export class ProfileView extends React.Component {
     return (
       <div className="profile-view">
         <Row className="justify-content-md-center mb-5">
-          <Col md={8} lg={12}>
+          <Col md={10} lg={12}>
             <div className="profile-page mb-4">Your Profile</div>
           </Col>
 
           <div className="w-100" />
 
-          <Col sm={10} md={8} lg={6}>
+          <Col md={10} lg={6}>
             <Card className="info-card mb-4">
               <Card.Header  className="info-card-hf text-center" as="h4">
                 Your Info
@@ -200,14 +203,15 @@ export class ProfileView extends React.Component {
             </Card>
           </Col>
 
-          <Col sm={10} md={8} lg={6}>
+          <Col md={10} lg={6}>
             <Card className="update-card mb-5">
               <Card.Header className="update-card-hf text-center" as="h4">
                 Edit Profile
               </Card.Header>
 
               <Card.Body className="update-card-b">
-                <Form className="update-form" onSubmit={e => this.updateUser(e)}>
+                <Form className="update-form" onSubmit={e => this.handleUpdate(e)}>
+                {/* <Form className="update-form" onSubmit={() => this.props.updateUser(this.state.user)}> */}
                   <Form.Group className="update-form mb-3" controlId="formUsername">
                     <Form.Label className="update-form-label">Username:</Form.Label>
                     <Form.Control className="update-form-input shadow-none"
@@ -265,14 +269,18 @@ export class ProfileView extends React.Component {
         </Row>
 
         <Row className="justify-content-md-center">
-          <Col md={8} lg={12}>
+          <Col md={10} lg={12}>
             <div className="favorite-movies mb-4">Favorite Movies:</div>
           </Col>
 
           <div className="w-100" />
 
+          { FavoriteMovies.length === 0 && (
+            <div className="muted-text">You have no favorite movies.</div>
+          )}
+
           { FavoriteMovies && FavoriteMovies.map(movie => (
-            <Col className="movie-card-container d-flex align-items-stretch mb-4 mb-md-5" sm={6} md={5} lg={4} key={movie._id}>
+            <Col className="movie-card-container d-flex align-items-stretch mb-4 mb-md-5" sm={6} md={5} lg={4} xl={3} key={movie._id}>
               <Card className="movie-card mb-4" movie={movie}>
                 <Card.Img variant="top" src={movie.ImagePath} />
                 <Card.Body>
@@ -309,5 +317,24 @@ ProfileView.propTypes = {
     )
   }),
   getUser: PropTypes.func.isRequired,
-  onBackClick: PropTypes.func.isRequired
+  onBackClick: PropTypes.func.isRequired,
+  setUser: PropTypes.func,
+  updateUser: PropTypes.func
 };
+
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    movies: state.movies
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateUser: (user) => {
+      dispatch(updateUser(user))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileView);
