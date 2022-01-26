@@ -33,20 +33,18 @@
 .login-card .login-card-hf .button-secondary:hover, .login-card .login-card-hf .button-secondary:focus, .login-card .login-card-hf .button-secondary:active {
   box-shadow: none !important;
 }
-.movie-title {
+.movie-view .movie-title {
   font-size: 2.25rem !important;
   color: #e67639 !important;
 }
-
-img {
+.movie-view img {
   max-height: 500px;
   filter: brightness(0.85);
 }
-
-.button-secondary {
+.movie-view .button-secondary {
   background-color: #00918C !important;
 }
-.button-secondary:hover, .button-secondary:focus, .button-secondary:active {
+.movie-view .button-secondary:hover, .movie-view .button-secondary:focus, .movie-view .button-secondary:active {
   background-color: #006d6a !important;
 }
 .registration-view {
@@ -97,8 +95,12 @@ img {
 .navbar .navbar-nav,
 .navbar .navbar-brand,
 .navbar .navbar-collapse,
-.navbar .navbar-dropdown {
+.navbar .navbar-dropdown,
+.navbar .nav-item {
   background-color: #b24d16 !important;
+}
+.navbar .nav-item-large {
+  width: 33%;
 }
 .navbar .navbar-dropdown {
   cursor: pointer;
@@ -309,7 +311,7 @@ img {
 }
 .main-view {
   max-width: 1400px;
-  min-height: calc(100vh - 75px);
+  min-height: 100vh;
   margin: 0 auto !important;
   align-content: flex-start;
 }
