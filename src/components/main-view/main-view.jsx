@@ -157,7 +157,7 @@ class MainView extends React.Component {
 
             if (genres.length === 0) return <Spinner animation="border" />;
 
-            return <Col md={8}>
+            return <Col md={10} lg={9}>
               <GenreView genre={genres.find(g => g.Name === match.params.name)} onBackClick={() => history.goBack()} />
             </Col>
           }} />
