@@ -13,8 +13,12 @@ $text: #F5F5F5;
   .navbar-nav,
   .navbar-brand,
   .navbar-collapse,
-  .navbar-dropdown {
+  .navbar-dropdown,
+  .nav-item {
     background-color: darken($primary, 10%) !important;
+  }
+  .nav-item-large {
+    width: 33%;
   }
   .navbar-dropdown {
     cursor: pointer;
