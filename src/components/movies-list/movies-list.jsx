@@ -20,7 +20,7 @@ function MoviesList(props) {
 
   if (!movies) return <div className="main-view" />;
 
-  return <>
+  return <Col>
     <Row className="d-block w-100">
       <h1 className="page-title text-center mb-5">Movies</h1>
     </Row>
@@ -32,7 +32,7 @@ function MoviesList(props) {
         </Col>
       ))}
     </Row>
-  </>;
+  </Col>;
 }
 
 MoviesList.propTypes = {
