@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/nightorb/myFlix-client#readme",
   "dependencies": {
+    "@parcel/core": "^2.2.1",
     "axios": "^0.24.0",
     "dayjs": "^1.10.7",
     "prop-types": "^15.7.2",
@@ -29,7 +30,7 @@
     "redux-devtools-extension": "^2.13.9"
   },
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.0.1",
+    "@parcel/transformer-sass": "^2.2.1",
     "eslint": "^8.6.0",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0"
