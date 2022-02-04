@@ -6,21 +6,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Row, Col, Form, Button, Card } from 'react-bootstrap';
 
-import { setUser, updateUser } from '../../actions/actions';
+import { setUser, updateUser, addFavorite } from '../../actions/actions';
 
 import './profile-view.scss';
 
 class ProfileView extends React.Component {
   constructor() {
     super();
-
-    this.state = {
-      Username: null,
-      Password: null,
-      Email: null,
-      Birthday: null,
-      FavoriteMovies: []
-    };
   }
 
   componentDidMount() {
@@ -38,11 +30,10 @@ class ProfileView extends React.Component {
     .then(response => {
       const data = response.data;
 
-      this.setState({
+      this.props.setUser({
         Username: data.Username,
-        Password: data.Password,
         Email: data.Email,
-        Birthday: data.Birthday,
+        Birthday: data.Birthday
       });
     })
     .catch(err => {
@@ -58,7 +49,7 @@ class ProfileView extends React.Component {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
-      this.setState({
+      this.props.addFavorite({
         FavoriteMovies: response.data.FavoriteMovies
       });
     })
@@ -73,27 +64,23 @@ class ProfileView extends React.Component {
       user = localStorage.getItem('user');
 
     axios.put(`https://nightorbs-myflix.herokuapp.com/users/${user}`,
-      {
-        Username: this.state.Username,
-        Password: this.state.Password,
-        Email: this.state.Email,
-        Birthday: this.state.Birthday
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
+      this.props.user,
+      { headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
         const data = response.data;
 
-        this.setState({
-          Username: data.Username || null,
+        this.props.setUser({
+          Username: data.Username,
           Password: data.Password,
           Email: data.Email,
           Birthday: data.Birthday
         });
+        const username = this.props.user.Username;
 
-        localStorage.setItem('user', this.state.Username);
+        localStorage.setItem('user', username);
         alert('Profile updated');
-        window.location.pathname = `/users/${this.state.Username}`;
+        window.location.pathname = `/users/${username}`;
       })
       .catch(err => {
         console.log(err);
@@ -101,31 +88,27 @@ class ProfileView extends React.Component {
   }
 
   setUsername(value) {
-    this.setState({
+    this.props.updateUser({
       Username: value
     });
-    this.Username = value;
   }
 
   setPassword(value) {
-    this.setState({
+    this.props.updateUser({
       Password: value
     });
-    this.Password = value;
   }
 
   setEmail(value) {
-    this.setState({
+    this.props.updateUser({
       Email: value
     });
-    this.Email = value;
   }
 
   setBirthday(value) {
-    this.setState({
+    this.props.updateUser({
       Birthday: value
     });
-    this.Birthday = value;
   }
 
   deleteUser() {
@@ -167,10 +150,10 @@ class ProfileView extends React.Component {
   }
 
   render() {
-    const { user, Username, Email, Birthday, FavoriteMovies } = this.state;
+    const { Username, Email, Birthday, FavoriteMovies } = this.props.user || {};
     const { onBackClick } = this.props;
 
-    if (user === null) return 'Loading';
+    if (Username === null) return 'Loading';
 
     return (
       <div className="profile-view">
@@ -211,7 +194,6 @@ class ProfileView extends React.Component {
 
               <Card.Body className="update-card-b">
                 <Form className="update-form" onSubmit={e => this.handleUpdate(e)}>
-                {/* <Form className="update-form" onSubmit={() => this.props.updateUser(this.state.user)}> */}
                   <Form.Group className="update-form mb-3" controlId="formUsername">
                     <Form.Label className="update-form-label">Username:</Form.Label>
                     <Form.Control className="update-form-input shadow-none"
@@ -302,24 +284,34 @@ class ProfileView extends React.Component {
 }
 
 ProfileView.propTypes = {
-  profile: PropTypes.shape({
-    Username: PropTypes.string.isRequired,
-    Password: PropTypes.string.isRequired,
-    Email: PropTypes.string.isRequired,
+  user: PropTypes.shape({
+    Username: PropTypes.string,
+    Password: PropTypes.string,
+    Email: PropTypes.string,
     Birthday: PropTypes.string,
-    FavoriteMovies: PropTypes.arrayOf(
-      PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        Title: PropTypes.string.isRequired,
-        ImagePath: PropTypes.string.isRequired,
-        ReleaseYear: PropTypes.string.isRequired
-      })
-    )
+    // FavoriteMovies: PropTypes.arrayOf(
+    //   PropTypes.shape({
+    //     _id: PropTypes.string.isRequired,
+    //     Title: PropTypes.string.isRequired,
+    //     ImagePath: PropTypes.string.isRequired,
+    //     ReleaseYear: PropTypes.string.isRequired
+    //   })
+    // )
   }),
-  getUser: PropTypes.func.isRequired,
-  onBackClick: PropTypes.func.isRequired,
+  FavoriteMovies: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      Title: PropTypes.string.isRequired,
+      ImagePath: PropTypes.string.isRequired,
+      ReleaseYear: PropTypes.string.isRequired
+    })
+  ),
+  getUser: PropTypes.func,
+  getFavoriteMovies: PropTypes.func,
+  onBackClick: PropTypes.func,
   setUser: PropTypes.func,
-  updateUser: PropTypes.func
+  updateUser: PropTypes.func,
+  addFavorite: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -331,8 +323,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setUser: (user) => {
+      dispatch(setUser(user))
+    },
     updateUser: (user) => {
       dispatch(updateUser(user))
+    },
+    addFavorite: (movie) => {
+      dispatch(addFavorite(movie))
     }
   }
 }
