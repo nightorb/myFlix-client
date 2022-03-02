@@ -5,7 +5,9 @@ export const SET_ACTORS = 'SET_ACTORS';
 export const SET_FILTER = 'SET_FILTER';
 export const SET_USER = 'SET_USER';
 export const UPDATE_USER = 'UPDATE_USER';
+export const SET_FAVORITE = 'SET_FAVORITE';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
+export const REMOVE_FAVORITE = 'REMOVE_FAVORITE';
 
 export function setMovies(value) {
   return {
@@ -42,23 +44,37 @@ export function setFilter(value) {
   }
 }
 
-export function setUser(value) {
+export function setUser(user) {
   return {
     type: SET_USER,
-    value
+    user
   }
 }
 
-export function updateUser(value) {
+export function updateUser(user) {
   return {
     type: UPDATE_USER,
-    value
+    user
   }
 }
 
-export function addFavorite(value) {
+export function setFavorite(movie) {
+  return {
+    type: SET_FAVORITE,
+    movie
+  }
+}
+
+export function addFavorite(movie) {
   return {
     type: ADD_FAVORITE,
-    value
+    movie
+  }
+}
+
+export function removeFavorite(movie) {
+  return {
+    type: REMOVE_FAVORITE,
+    movie
   }
 }
