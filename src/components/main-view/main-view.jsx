@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { Row, Col, Spinner } from 'react-bootstrap';
 
-import { setMovies, setGenres, setDirectors, setActors } from '../../actions/actions.js';
+import { setMovies, setGenres, setDirectors, setActors, setUser } from '../../actions/actions.js';
 
 import MoviesList from '../movies-list/movies-list';
 import GenresList from '../genres-list/genres-list';
@@ -26,10 +26,6 @@ class MainView extends React.Component {
   // constructor method creates the component
   constructor() {
     super();
-    // initial state is set to null
-    this.state = {
-      user: null
-    };
   }
 
   componentDidMount() {
@@ -37,7 +33,7 @@ class MainView extends React.Component {
 
     // to persist user's login data
     if (accessToken !== null) {
-      this.setState({
+      this.props.setUser({
         user: localStorage.getItem('user')
       });
       this.getMovies(accessToken);
@@ -99,7 +95,7 @@ class MainView extends React.Component {
 
   // when user successfully logs in, this function updates user property in state to that particular user
   onLoggedIn(authData) {
-    this.setState({
+    this.props.setUser({
       user: authData.user.Username
     });
 
@@ -112,8 +108,7 @@ class MainView extends React.Component {
   }
 
   render() {
-    const { movies, genres, directors, actors } = this.props;
-    const { user } = this.state;
+    const { user, movies, genres, directors, actors } = this.props;
 
     return (
       <Router>
@@ -218,8 +213,9 @@ const mapStateToProps = state => {
     movies: state.movies,
     genres: state.genres,
     directors: state.directors,
-    actors: state.actors
+    actors: state.actors,
+    user: state.user
   }
 }
 
-export default connect(mapStateToProps, { setMovies, setGenres, setDirectors, setActors })(MainView);
+export default connect(mapStateToProps, { setMovies, setGenres, setDirectors, setActors, setUser })(MainView);
