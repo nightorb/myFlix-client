@@ -7,7 +7,9 @@ import {
   SET_FILTER,
   SET_USER,
   UPDATE_USER,
-  ADD_FAVORITE
+  SET_FAVORITE,
+  ADD_FAVORITE,
+  REMOVE_FAVORITE
 } from '../actions/actions';
 
 function movies(state = [], action) {
@@ -58,19 +60,29 @@ function visibilityFilter(state = '', action) {
 function user(state = null, action) {
   switch(action.type) {
     case SET_USER:
-      return action.value;
+      return action.user;
     case UPDATE_USER:
       // takes state and action.value and combines them into a new object
-      return {...state, ...action.value};
+      return [
+        ...state,
+        ...action.user
+      ];
     default:
       return state;
   }
 }
 
-function addFavorite(state = [], action) {
+function favoriteMovies(state = [], action) {
   switch(action.type) {
+    case SET_FAVORITE:
+      return action.movie;
     case ADD_FAVORITE:
-      return {...state, ...action.value};
+      return [
+        ...state,
+        ...action.movie
+      ];
+    case REMOVE_FAVORITE:
+      return state.filter(movie => movie !== action.movie);
     default:
       return state;
   }
@@ -83,7 +95,7 @@ const movieApp = combineReducers({
   actors,
   visibilityFilter,
   user,
-  addFavorite
+  favoriteMovies
 });
 
 export default movieApp;
