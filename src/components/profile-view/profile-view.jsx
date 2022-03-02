@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Row, Col, Form, Button, Card } from 'react-bootstrap';
 
-import { setUser, updateUser, addFavorite } from '../../actions/actions';
+import { setUser, updateUser, setFavorite } from '../../actions/actions';
 
 import './profile-view.scss';
 
@@ -20,9 +20,8 @@ class ProfileView extends React.Component {
     this.getFavoriteMovies();
   }
 
-  getUser() {
-    const user = localStorage.getItem('user'),
-      token = localStorage.getItem('token');
+  getUser(token) {
+    const user = localStorage.getItem('user');
 
     axios.get(`https://nightorbs-myflix.herokuapp.com/users/${user}`, {
       headers: { Authorization: `Bearer ${token}` }
@@ -41,15 +40,14 @@ class ProfileView extends React.Component {
     })
   }
 
-  getFavoriteMovies() {
-    const user = localStorage.getItem('user'),
-      token = localStorage.getItem('token');
+  getFavoriteMovies(token) {
+    const user = localStorage.getItem('user');
 
     axios.get(`https://nightorbs-myflix.herokuapp.com/users/${user}/favorites`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
-      this.props.addFavorite({
+      this.props.setFavorite({
         FavoriteMovies: response.data.FavoriteMovies
       });
     })
@@ -66,25 +64,24 @@ class ProfileView extends React.Component {
     axios.put(`https://nightorbs-myflix.herokuapp.com/users/${user}`,
       this.props.user,
       { headers: { Authorization: `Bearer ${token}` }
-      })
-      .then(response => {
-        const data = response.data;
+    })
+    .then(response => {
+      const data = response.data;
 
-        this.props.setUser({
-          Username: data.Username,
-          Password: data.Password,
-          Email: data.Email,
-          Birthday: data.Birthday
-        });
-        const username = this.props.user.Username;
-
-        localStorage.setItem('user', username);
-        alert('Profile updated');
-        window.location.pathname = `/users/${username}`;
-      })
-      .catch(err => {
-        console.log(err);
+      this.props.setUser({
+        Username: data.Username,
+        Email: data.Email,
+        Birthday: data.Birthday
       });
+      const username = this.props.user.Username;
+
+      localStorage.setItem('user', username);
+      alert('Profile updated');
+      window.location.pathname = `/users/${username}`;
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   setUsername(value) {
@@ -111,12 +108,11 @@ class ProfileView extends React.Component {
     });
   }
 
-  deleteUser() {
+  deleteUser(token) {
     const confirmation = window.confirm('Are you sure you want to delete your account?');
 
     if (confirmation) {
-      const token = localStorage.getItem('token'),
-        user = localStorage.getItem('user');
+      const user = localStorage.getItem('user');
 
       axios.delete(`https://nightorbs-myflix.herokuapp.com/users/${user}`, {
         headers: { Authorization: `Bearer ${token}` }
@@ -289,29 +285,21 @@ ProfileView.propTypes = {
     Password: PropTypes.string,
     Email: PropTypes.string,
     Birthday: PropTypes.string,
-    // FavoriteMovies: PropTypes.arrayOf(
-    //   PropTypes.shape({
-    //     _id: PropTypes.string.isRequired,
-    //     Title: PropTypes.string.isRequired,
-    //     ImagePath: PropTypes.string.isRequired,
-    //     ReleaseYear: PropTypes.string.isRequired
-    //   })
-    // )
+    FavoriteMovies: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        Title: PropTypes.string.isRequired,
+        ImagePath: PropTypes.string.isRequired,
+        ReleaseYear: PropTypes.string.isRequired
+      })
+    )
   }),
-  FavoriteMovies: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      Title: PropTypes.string.isRequired,
-      ImagePath: PropTypes.string.isRequired,
-      ReleaseYear: PropTypes.string.isRequired
-    })
-  ),
   getUser: PropTypes.func,
   getFavoriteMovies: PropTypes.func,
   onBackClick: PropTypes.func,
   setUser: PropTypes.func,
   updateUser: PropTypes.func,
-  addFavorite: PropTypes.func
+  setFavorite: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -329,8 +317,8 @@ const mapDispatchToProps = dispatch => {
     updateUser: (user) => {
       dispatch(updateUser(user))
     },
-    addFavorite: (movie) => {
-      dispatch(addFavorite(movie))
+    setFavorite: (movie) => {
+      dispatch(setFavorite(movie))
     }
   }
 }
