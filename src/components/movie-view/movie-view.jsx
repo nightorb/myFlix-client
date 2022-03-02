@@ -2,30 +2,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Row, Col, Button, Image } from 'react-bootstrap';
+
+import { addFavorite } from '../../actions/actions';
 
 import './movie-view.scss';
 
 export class MovieView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isFavorite: 'Add to Favorites'
-    };
+    // this.state = {
+    //   isFavorite: 'Add to Favorites'
+    // };
   }
 
-  addFavoriteMovie() {
-    const token = localStorage.getItem('token'),
-      user = localStorage.getItem('user');
+  addFavoriteMovie(token) {
+    const user = localStorage.getItem('user');
 
-    this.setState({
-      isFavorite: 'Added to Favorites!'
-    })
+    this.props.addFavorite({
+      isFavorite: 'Add to Favorites'
+    });
 
     axios.post(`https://nightorbs-myflix.herokuapp.com/users/${user}/favorites/${this.props.movie._id}`, {}, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(() => {
+      this.props.addFavorite({
+        isFavorite: 'Added to Favorites!'
+      });
       alert('Movie added to your favorites');
     })
     .catch(err => {
@@ -35,13 +40,14 @@ export class MovieView extends React.Component {
 
   render() {
     const { movie, onBackClick } = this.props;
+    console.log(this.props.isFavorite);
 
     return (
       <div className="movie-view">
         <Row className="justify-content-sm-center">
           <Col className="mb-4" sm={9} md={12}>
             <div className="movie-title mb-2">{movie.Title}</div>
-            <Button className="button-secondary" value={movie._id} onClick={() => this.addFavoriteMovie()}>{this.state.isFavorite}</Button>
+            <Button className="button-secondary" value={movie._id} onClick={() => this.addFavoriteMovie()}>{this.props.isFavorite}</Button>
           </Col>
         </Row>
 
@@ -93,5 +99,17 @@ MovieView.propTypes = {
     ),
     Featured: PropTypes.bool.isRequired
   }).isRequired,
-  onBackClick: PropTypes.func.isRequired
+  onBackClick: PropTypes.func.isRequired,
+  addFavorite: PropTypes.func,
+  isFavorite: PropTypes.string
 };
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addFavorite: (movie) => {
+      dispatch(addFavorite(movie));
+    }
+  }
+}
+
+export default connect(mapDispatchToProps)(MovieView);
