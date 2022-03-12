@@ -12,25 +12,17 @@ import './movie-view.scss';
 export class MovieView extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   isFavorite: 'Add to Favorites'
-    // };
   }
 
-  addFavoriteMovie(token) {
+  addFavoriteMovie() {
     const user = localStorage.getItem('user');
-
-    this.props.addFavorite({
-      isFavorite: 'Add to Favorites'
-    });
+    const token = localStorage.getItem('token');
 
     axios.post(`https://nightorbs-myflix.herokuapp.com/users/${user}/favorites/${this.props.movie._id}`, {}, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(() => {
-      this.props.addFavorite({
-        isFavorite: 'Added to Favorites!'
-      });
+      this.props.addFavorite();
       alert('Movie added to your favorites');
     })
     .catch(err => {
@@ -40,14 +32,13 @@ export class MovieView extends React.Component {
 
   render() {
     const { movie, onBackClick } = this.props;
-    console.log(this.props.isFavorite);
 
     return (
       <div className="movie-view">
         <Row className="justify-content-sm-center">
           <Col className="mb-4" sm={9} md={12}>
             <div className="movie-title mb-2">{movie.Title}</div>
-            <Button className="button-secondary" value={movie._id} onClick={() => this.addFavoriteMovie()}>{this.props.isFavorite}</Button>
+            <Button className="button-secondary" value={movie._id} onClick={() => this.addFavoriteMovie()}>Add to Favorites</Button>
           </Col>
         </Row>
 
@@ -104,6 +95,12 @@ MovieView.propTypes = {
   isFavorite: PropTypes.string
 };
 
+const mapStateToProps = state => {
+  return {
+    movies: state.movies
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     addFavorite: (movie) => {
@@ -112,4 +109,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapDispatchToProps)(MovieView);
+export default connect(mapStateToProps, mapDispatchToProps)(MovieView);
