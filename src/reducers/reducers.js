@@ -7,7 +7,6 @@ import {
   SET_FILTER,
   SET_USER,
   UPDATE_USER,
-  SET_FAVORITE,
   ADD_FAVORITE,
   REMOVE_FAVORITE
 } from '../actions/actions';
@@ -64,9 +63,13 @@ function user(state = null, action) {
     case UPDATE_USER:
       // takes state and action.value and combines them into a new object
       return [
-        ...state,
-        ...action.user
+        state,
+        action.user
       ];
+      // return {
+      //   state,
+      //   action
+      // };
     default:
       return state;
   }
@@ -74,12 +77,10 @@ function user(state = null, action) {
 
 function favoriteMovies(state = [], action) {
   switch(action.type) {
-    case SET_FAVORITE:
-      return action.movie;
     case ADD_FAVORITE:
       return [
         ...state,
-        ...action.movie
+        action.movie
       ];
     case REMOVE_FAVORITE:
       return state.filter(movie => movie !== action.movie);
