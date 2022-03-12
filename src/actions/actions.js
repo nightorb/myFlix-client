@@ -5,7 +5,6 @@ export const SET_ACTORS = 'SET_ACTORS';
 export const SET_FILTER = 'SET_FILTER';
 export const SET_USER = 'SET_USER';
 export const UPDATE_USER = 'UPDATE_USER';
-export const SET_FAVORITE = 'SET_FAVORITE';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const REMOVE_FAVORITE = 'REMOVE_FAVORITE';
 
@@ -55,13 +54,6 @@ export function updateUser(user) {
   return {
     type: UPDATE_USER,
     user
-  }
-}
-
-export function setFavorite(movie) {
-  return {
-    type: SET_FAVORITE,
-    movie
   }
 }
 
