@@ -14,7 +14,7 @@ import ActorsList from '../actors-list/actors-list';
 import { NavbarView } from '../navbar-view/navbar-view.jsx';
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
-import { MovieView } from '../movie-view/movie-view';
+import  MovieView  from '../movie-view/movie-view';
 import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
 import { ActorView } from '../actor-view/actor-view';
@@ -193,13 +193,13 @@ class MainView extends React.Component {
             </Col>
           }} />
 
-          <Route path={`/users/${user}`} render={({ history }) => {
+          <Route path="/users/:username" render={({ history }) => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
 
             if (movies.length === 0) return <div className="main-view" />;
 
             return <Col xs={12}>
-              <ProfileView getUser={() => this.getUser() } onBackClick={() => history.goBack()} />
+              <ProfileView onBackClick={() => history.goBack()} />
             </Col>
           }} />
         </Row>
