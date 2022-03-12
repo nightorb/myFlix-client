@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Row, Col, Form, Button, Card } from 'react-bootstrap';
 
-import { setUser, updateUser, setFavorite } from '../../actions/actions';
+import { setUser, updateUser } from '../../actions/actions';
 
 import './profile-view.scss';
 
@@ -17,13 +17,13 @@ class ProfileView extends React.Component {
 
   componentDidMount() {
     this.getUser();
-    this.getFavoriteMovies();
   }
 
-  getUser(token) {
+  getUser() {
     const user = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
 
-    axios.get(`https://nightorbs-myflix.herokuapp.com/users/${user}`, {
+    axios.get(`https://nightorbs-myflix.herokuapp.com/users/${user}/favorites`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
@@ -32,37 +32,23 @@ class ProfileView extends React.Component {
       this.props.setUser({
         Username: data.Username,
         Email: data.Email,
-        Birthday: data.Birthday
+        Birthday: data.Birthday,
+        FavoriteMovies: data.FavoriteMovies
       });
     })
     .catch(err => {
-      console.log(err);
-    })
-  }
-
-  getFavoriteMovies(token) {
-    const user = localStorage.getItem('user');
-
-    axios.get(`https://nightorbs-myflix.herokuapp.com/users/${user}/favorites`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    .then(response => {
-      this.props.setFavorite({
-        FavoriteMovies: response.data.FavoriteMovies
-      });
-    })
-    .catch(err => {
-      console.log(err);
+      console.error(err);
     })
   }
 
   handleUpdate(e) {
     e.preventDefault();
-    const token = localStorage.getItem('token'),
-      user = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
 
     axios.put(`https://nightorbs-myflix.herokuapp.com/users/${user}`,
       this.props.user,
+      console.log(this.props.user, ' inside handleUpdate'),
       { headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
@@ -108,11 +94,12 @@ class ProfileView extends React.Component {
     });
   }
 
-  deleteUser(token) {
+  deleteUser() {
     const confirmation = window.confirm('Are you sure you want to delete your account?');
 
     if (confirmation) {
       const user = localStorage.getItem('user');
+      const token = localStorage.getItem('token');
 
       axios.delete(`https://nightorbs-myflix.herokuapp.com/users/${user}`, {
         headers: { Authorization: `Bearer ${token}` }
@@ -148,6 +135,7 @@ class ProfileView extends React.Component {
   render() {
     const { Username, Email, Birthday, FavoriteMovies } = this.props.user || {};
     const { onBackClick } = this.props;
+    console.log(this.props.user);
 
     if (Username === null) return 'Loading';
 
@@ -253,7 +241,7 @@ class ProfileView extends React.Component {
 
           <div className="w-100" />
 
-          { FavoriteMovies.length === 0 && (
+          { FavoriteMovies && FavoriteMovies.length === 0 && (
             <div className="muted-text">You have no favorite movies.</div>
           )}
 
@@ -295,11 +283,9 @@ ProfileView.propTypes = {
     )
   }),
   getUser: PropTypes.func,
-  getFavoriteMovies: PropTypes.func,
   onBackClick: PropTypes.func,
   setUser: PropTypes.func,
-  updateUser: PropTypes.func,
-  setFavorite: PropTypes.func
+  updateUser: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -316,9 +302,6 @@ const mapDispatchToProps = dispatch => {
     },
     updateUser: (user) => {
       dispatch(updateUser(user))
-    },
-    setFavorite: (movie) => {
-      dispatch(setFavorite(movie))
     }
   }
 }
