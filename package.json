@@ -1,9 +1,8 @@
 {
   "name": "myflix-client",
   "version": "1.0.0",
-  "description": "",
+  "description": "myFlix front end",
   "default": "src/index.html",
-  "main": "src/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -32,9 +31,10 @@
     "redux-devtools-extension": "^2.13.9"
   },
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.2.1",
+    "@parcel/transformer-sass": "^2.3.2",
     "eslint": "^8.6.0",
     "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0"
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "process": "^0.11.10"
   }
 }
