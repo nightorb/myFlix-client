@@ -5,15 +5,23 @@
 To learn more about its server-side component, click [here](https://github.com/nightorb/movie_api).
 
 ## Live Demo
-Check out the live demo of this project [here](https://nightorbs-myflix.netlify.app/).
+To check out the live demo of this project, click [here](https://nightorbs-myflix.netlify.app/). If you don't want to create an account, you can login with the demo user:
 
-**Key Features:**
+- **Username:** demouser
+- **Password:** Demo_1234
+
+Please note that you shouldn't change the username or password when using the demo user.
+
+![myFlix_Screenshot](https://user-images.githubusercontent.com/89855337/158446339-6dbf8c9c-20a8-43fd-b2a5-ba42c5832d75.png)
+
+
+## Key Features
 - Allows new users to register, and existing users to login/logout
 - Allows users to view details about movies, genres, directors, and actors
 - Users are able to update or delete their profile
 - Users are able to add/remove movies to their list of favorites
 
-**Technical Features:**
+## Technical Features
 - Single-page application (SPA)
 - Uses state routing to navigate between views and share URLs
 - Gives users the option to filter movies
@@ -22,7 +30,7 @@ Check out the live demo of this project [here](https://nightorbs-myflix.netlify.
 - Uses React Bootstrap as a UI library for styling and responsiveness
 - Contains a mix of class components and function components
 
-**Built with**
+## Built with
 - React
 - React-Bootstrap
 - React Router
