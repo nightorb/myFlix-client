@@ -61,15 +61,10 @@ function user(state = null, action) {
     case SET_USER:
       return action.user;
     case UPDATE_USER:
-      // takes state and action.value and combines them into a new object
-      return [
-        state,
-        action.user
-      ];
-      // return {
-      //   state,
-      //   action
-      // };
+      return {
+        ...state,
+        ...action.user
+      };
     default:
       return state;
   }
