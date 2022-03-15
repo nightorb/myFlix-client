@@ -47,23 +47,27 @@ class ProfileView extends React.Component {
     const user = localStorage.getItem('user');
 
     axios.put(`https://nightorbs-myflix.herokuapp.com/users/${user}`,
-      this.props.user,
-      console.log(this.props.user, ' inside handleUpdate'),
+      this.state,
       { headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
       const data = response.data;
 
-      this.props.setUser({
+      this.props.updateUser({
         Username: data.Username,
         Email: data.Email,
         Birthday: data.Birthday
       });
       const username = this.props.user.Username;
 
-      localStorage.setItem('user', username);
-      alert('Profile updated');
-      window.location.pathname = `/users/${username}`;
+      if (username === this.state.Username) {
+        localStorage.setItem('user', username);
+        alert('Profile updated');
+        window.location.pathname = `/users/${username}`;
+      } else {
+        localStorage.setItem('user', username);
+        alert('Profile updated');
+      }
     })
     .catch(err => {
       console.log(err);
@@ -71,25 +75,25 @@ class ProfileView extends React.Component {
   }
 
   setUsername(value) {
-    this.props.updateUser({
+    this.setState({
       Username: value
     });
   }
 
   setPassword(value) {
-    this.props.updateUser({
+    this.setState({
       Password: value
     });
   }
 
   setEmail(value) {
-    this.props.updateUser({
+    this.setState({
       Email: value
     });
   }
 
   setBirthday(value) {
-    this.props.updateUser({
+    this.setState({
       Birthday: value
     });
   }
@@ -135,7 +139,6 @@ class ProfileView extends React.Component {
   render() {
     const { Username, Email, Birthday, FavoriteMovies } = this.props.user || {};
     const { onBackClick } = this.props;
-    console.log(this.props.user);
 
     if (Username === null) return 'Loading';
 
