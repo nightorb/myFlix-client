@@ -114,7 +114,7 @@ class MainView extends React.Component {
       <Router>
         <NavbarView />
 
-        <Row className="main-view justify-content-center py-5 px-5">
+        <Row className="main-view justify-content-center py-5 px-1 px-sm-5">
           <Route exact path="/" render={() => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
 
