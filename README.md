@@ -1,5 +1,6 @@
 # myFlix-client [![Netlify Status](https://api.netlify.com/api/v1/badges/f90a8064-a676-4491-bafb-db5e223e23e5/deploy-status)](https://app.netlify.com/sites/nightorbs-myflix/deploys)
- 
+
+## Overview
 "myFlix" is a single-page, responsive application with routing, rich interactions, several interface views, and a polished user experience. The app provides users with access to information about different movies, directors, genres, and actors. Users are able to sign up, update their personal information, and create a list of their favorite movies.
 
 To learn more about its server-side component, click [here](https://github.com/nightorb/movie_api).<br>
