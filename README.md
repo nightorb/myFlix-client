@@ -2,7 +2,8 @@
  
 "myFlix" is a single-page, responsive application with routing, rich interactions, several interface views, and a polished user experience. The app provides users with access to information about different movies, directors, genres, and actors. Users are able to sign up, update their personal information, and create a list of their favorite movies.
 
-To learn more about its server-side component, click [here](https://github.com/nightorb/movie_api).
+To learn more about its server-side component, click [here](https://github.com/nightorb/movie_api).<br>
+There is also an [Angular version of myFlix](https://nightorb.github.io/myFlix-client-Angular/).
 
 ## Live Demo
 To check out the live demo of this project, click [here](https://nightorbs-myflix.netlify.app/). If you don't want to create an account, you can login with the demo user:
@@ -12,8 +13,35 @@ To check out the live demo of this project, click [here](https://nightorbs-myfli
 
 Please note that you shouldn't change the username or password when using the demo user.
 
-![myFlix_Screenshot](https://user-images.githubusercontent.com/89855337/158446339-6dbf8c9c-20a8-43fd-b2a5-ba42c5832d75.png)
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/89855337/162857255-f3114277-babc-4884-bfd3-09bf05f8c525.png"
+       alt="screenshot of myFlix app login view"
+       width=45%>
+  <img src="https://user-images.githubusercontent.com/89855337/162857261-2ee5c3c8-3849-4d07-81f0-a9311899b8ac.png"
+       alt="screenshot of main view with movies list"
+       width=45%>
+  <img src="https://user-images.githubusercontent.com/89855337/162857257-65d897bb-1d6e-4b40-8967-4ec59e1385eb.png"
+       alt="screenshot of movie details view"
+       width=45%>
+  <img src="https://user-images.githubusercontent.com/89855337/162857251-fb2d8978-137a-495d-a3f4-4c5293c50fdc.png"
+       alt="screenshot of director details view"
+       width=45%>
+  <img src="https://user-images.githubusercontent.com/89855337/162857252-7134dd36-c610-4b86-9d8b-545b1475ed8f.png"
+       alt="screenshot of genres list"
+       width=45%>
+  <img src="https://user-images.githubusercontent.com/89855337/162857899-9fb34bd5-b24c-46a0-980f-3856e9cbdbc8.png"
+       alt="screenshot of user profile"
+       width=45%>
+</div>
 
+## Built with
+- React
+- React-Bootstrap
+- React Router
+- React Redux
+- Redux
+- Axios
+- PropTypes
 
 ## Key Features
 - Allows new users to register, and existing users to login/logout
@@ -29,12 +57,3 @@ Please note that you shouldn't change the username or password when using the de
 - Written with React library and React Redux
 - Uses React Bootstrap as a UI library for styling and responsiveness
 - Contains a mix of class components and function components
-
-## Built with
-- React
-- React-Bootstrap
-- React Router
-- React Redux
-- Redux
-- Axios
-- PropTypes
